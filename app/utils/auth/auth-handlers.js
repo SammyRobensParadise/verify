@@ -18,6 +18,20 @@ export const _onLogin = async () => {
     })
 }
 
+export const _onLoginWithInfo = async () => {
+  return auth0.webAuth
+    .authorize({
+      scope: 'openid profile email',
+    })
+    .then(async (credentials) => {
+      const UserInfo = await _getUserInfo(credentials.accessToken)
+      return { ...credentials, userInfo: UserInfo }
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 /**
  * @returns {success}
  */
@@ -32,6 +46,21 @@ export const _onLogout = async () => {
     })
 }
 
+export const _getUserInfo = async (accessToken) => {
+  const url = `${_getBaseAuthURL()}/userinfo`
+  const options = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+  }
+  return fetch(url, { ...options })
+    .then((raw) => {
+      return raw.json()
+    })
+    .catch((error) => {
+      return error
+    })
+}
+
 export const _getBaseAuthURL = () => {
-  return 'https://swstudios.us.auth0.com/'
+  return 'https://swstudios.us.auth0.com'
 }

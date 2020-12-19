@@ -5,15 +5,16 @@
 
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import { _onLogin, _onLogout } from './utils/auth/auth-handlers'
+import { _onLoginWithInfo, _onLogout } from './utils/auth/auth-handlers'
 import CoreApp from './src/core/CoreApp'
 
 const App = () => {
   const [loggedIn, AuthUser] = useState(false)
 
   const _handleLogin = async () => {
-    const res = await _onLogin()
+    const res = await _onLoginWithInfo()
     if (res.accessToken) {
+      console.log(res)
       AuthUser(true)
     }
   }
