@@ -28,7 +28,7 @@ const Landing = ({ authUser }) => {
           fontFamily: theme.typeface.fontFamily,
         }}
       >
-        New or returning User?
+        Verify the accuracy of social content
       </Text>
       <View style={styles.card}>
         <LogoV />
