@@ -11,6 +11,7 @@ export const _onLogin = async () => {
       scope: 'openid profile email',
     })
     .then((credentials) => {
+      console.log(credentials)
       return credentials
     })
     .catch((error) => {
@@ -30,4 +31,8 @@ export const _onLogout = async () => {
     .catch((error) => {
       return error
     })
+}
+
+export const _getBaseAuthURL = () => {
+  return 'https://swstudios.us.auth0.com/'
 }

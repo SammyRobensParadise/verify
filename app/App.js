@@ -5,12 +5,8 @@
 
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import Auth0 from 'react-native-auth0'
 import { _onLogin, _onLogout } from './utils/auth/auth-handlers'
 import CoreApp from './src/core/CoreApp'
-
-var credentials = require('./auth0-configuration')
-const auth0 = new Auth0(credentials)
 
 const App = () => {
   const [loggedIn, AuthUser] = useState(false)
