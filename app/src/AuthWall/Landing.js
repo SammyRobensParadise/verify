@@ -4,15 +4,15 @@ import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from 'react-na
 import theme from '../../components/theme/theme'
 import { _onLoginWithInfo } from '../../utils/auth/auth-handlers'
 import { TYPES, setStore } from '../../utils/store/store-handlers'
+import { KEYS } from '../../utils/store/keys'
 import { LogoV } from '../../components/svg/Vectors'
 
-// eslint-disable-next-line react/prop-types
 const Landing = ({ authUser }) => {
   const _handleLogin = async () => {
     const res = await _onLoginWithInfo()
     if (res.accessToken) {
       console.log(res)
-      await setStore('userInfo', res.userInfo, TYPES.JSON)
+      await setStore(KEYS.USER_INFO, res.userInfo, TYPES.JSON)
       authUser(true)
     }
   }
@@ -39,7 +39,7 @@ const Landing = ({ authUser }) => {
   )
 }
 
-Landing.PropTypes = { authUser: PropTypes.func }
+Landing.propTypes = { authUser: PropTypes.func }
 
 const styles = StyleSheet.create({
   button: {
