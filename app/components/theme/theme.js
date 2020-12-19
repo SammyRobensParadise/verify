@@ -3,6 +3,7 @@ const theme = {
     white: '#ffffff',
     primaryPurple: '#7000FF',
     offWhite: '#F5FCFF',
+    black: '#000000',
   },
   typeface: {
     fontFamily: 'Helvetica',

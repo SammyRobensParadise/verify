@@ -1,4 +1,3 @@
-import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const TYPES = {
@@ -32,10 +31,12 @@ export const setStore = async (key, value, type) => {
 
 export const getStore = async (key, type) => {
   let value
+  let err
   try {
     value = await AsyncStorage.getItem(`@${key}`)
   } catch (e) {
     value = e
+    err = e
   }
-  return type === TYPES.JSON && value !== e ? JSON.parse(value) : value
+  return type === TYPES.JSON && value !== err ? JSON.parse(value) : value
 }
