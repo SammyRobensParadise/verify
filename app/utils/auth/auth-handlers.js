@@ -11,7 +11,6 @@ export const _onLogin = async () => {
       scope: 'openid profile email',
     })
     .then((credentials) => {
-      console.log(credentials)
       return credentials
     })
     .catch((error) => {
