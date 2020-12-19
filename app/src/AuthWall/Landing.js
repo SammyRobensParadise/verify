@@ -38,7 +38,7 @@ const Landing = ({ authUser }) => {
               style={{
                 color: theme.colors.primaryPurple,
                 fontSize: theme.typeface.textMedium,
-                fontFamily: 'San Francisco',
+                fontFamily: theme.typeface.fontFamily,
               }}
             >
               Login to Verify

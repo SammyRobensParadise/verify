@@ -5,7 +5,7 @@ const theme = {
     offWhite: '#F5FCFF',
   },
   typeface: {
-    fontFamily: 'San Francisco',
+    fontFamily: 'Helvetica',
     textSmall: 16,
     textMedium: 20,
     textLarge: 30,
