@@ -7,12 +7,12 @@ import React, { useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import Auth0 from 'react-native-auth0'
 import { _onLogin, _onLogout } from './utils/auth/auth-handlers'
+import CoreApp from './src/core/CoreApp'
 
 var credentials = require('./auth0-configuration')
 const auth0 = new Auth0(credentials)
 
 const App = () => {
-  // let loggedIn = this.state.accessToken === null ? false : true
   const [loggedIn, AuthUser] = useState(false)
 
   const _handleLogin = async () => {
@@ -29,15 +29,16 @@ const App = () => {
     }
   }
 
-  return (
+  return !loggedIn ? (
     <View style={styles.container}>
       <Text style={styles.header}>Login to Verify </Text>
-      <Text>You are{loggedIn ? ' ' : ' not '}logged in to Verify. </Text>
       <Button
         onPress={loggedIn ? _handleLogout : _handleLogin}
         title={loggedIn ? 'Log Out' : 'Log In'}
       />
     </View>
+  ) : (
+    <CoreApp />
   )
 }
 
