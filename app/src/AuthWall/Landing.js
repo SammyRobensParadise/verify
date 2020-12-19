@@ -5,7 +5,7 @@
 
 import React from 'react'
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from 'react-native'
-
+import theme from '../../components/theme/theme'
 import { _onLoginWithInfo, _onLogout } from '../../utils/auth/auth-handlers'
 import { LogoV } from '../../components/svg/Vectors'
 
@@ -19,11 +19,32 @@ const Landing = ({ authUser }) => {
   }
   return (
     <SafeAreaView style={styles.container}>
+      <Text
+        style={{
+          color: theme.colors.primaryPurple,
+          fontSize: theme.typeface.textMedium,
+          textDecorationLine: 'underline',
+          marginBottom: 20,
+          fontFamily: theme.typeface.fontFamily,
+        }}
+      >
+        New or returning User?
+      </Text>
       <View style={styles.card}>
         <LogoV />
-        <TouchableOpacity style={styles.button} onPress={_handleLogin} title={'Log In to Verify'}>
-          <Text>Login to Verify</Text>
-        </TouchableOpacity>
+        <View style={{ color: theme.colors.primaryPurple }}>
+          <TouchableOpacity style={styles.button} onPress={_handleLogin} title={'Log In to Verify'}>
+            <Text
+              style={{
+                color: theme.colors.primaryPurple,
+                fontSize: theme.typeface.textMedium,
+                fontFamily: 'San Francisco',
+              }}
+            >
+              Login to Verify
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   )
@@ -34,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: theme.colors.offWhite,
   },
   header: {
     fontSize: 20,
@@ -45,16 +66,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 200,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: theme.colors.offWhite,
     padding: 15,
     borderRadius: 10,
-    color: '#7000FF',
+    color: theme.colors.primaryPurple,
     fontSize: 30,
   },
   card: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#7000FF',
+    backgroundColor: theme.colors.primaryPurple,
     height: '30%',
     borderRadius: 7,
     padding: 50,
