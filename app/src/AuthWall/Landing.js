@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from 'react-native'
 import theme from '../../components/theme/theme'
 import { _onLoginWithInfo } from '../../utils/auth/auth-handlers'
-import { TYPES, setStore } from '../../utils/store/store-handlers'
+import { storeDataObject } from '../../utils/store/store-handlers'
 import { KEYS } from '../../utils/store/keys'
 import { LogoV } from '../../components/svg/Vectors'
 
@@ -11,8 +11,7 @@ const Landing = ({ authUser }) => {
   const _handleLogin = async () => {
     const res = await _onLoginWithInfo()
     if (res.accessToken) {
-      console.log(res)
-      await setStore(KEYS.USER_INFO, res.userInfo, TYPES.JSON)
+      await storeDataObject(KEYS.USER_INFO, res.userInfo)
       authUser(true)
     }
   }
