@@ -1,5 +1,15 @@
+/* eslint-disable react-native/split-platform-components */
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  SafeAreaView,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Platform,
+  PermissionsAndroid,
+} from 'react-native'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import { getDataObject } from '../../utils/store/store-handlers'
 import { createOneButtonAlert } from '../../components/alerts/Alerts'
 import theme from '../../components/theme/theme'
@@ -25,6 +35,104 @@ const HomePage = () => {
       })
   }, [])
 
+  const [filePath, setFilePath] = useState({})
+
+  const requestCameraPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+          title: 'Camera Permission',
+          message: 'App needs camera permission',
+        })
+        // If CAMERA Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED
+      } catch (err) {
+        console.warn(err)
+        return false
+      }
+    } else return true
+  }
+
+  const requestExternalWritePermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'External Storage Write Permission',
+            message: 'App needs write permission',
+          },
+        )
+        // If WRITE_EXTERNAL_STORAGE Permission is granted
+        return granted === PermissionsAndroid.RESULTS.GRANTED
+      } catch (err) {
+        console.warn(err)
+        alert('Write permission err', err)
+      }
+      return false
+    } else return true
+  }
+
+  const captureImage = async (type) => {
+    let options = {
+      mediaType: type,
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+      videoQuality: 'low',
+      durationLimit: 30, //Video max duration in seconds
+      saveToPhotos: true,
+    }
+    let isCameraPermitted = await requestCameraPermission()
+    let isStoragePermitted = await requestExternalWritePermission()
+    if (isCameraPermitted && isStoragePermitted) {
+      launchCamera(options, (response) => {
+        console.log('Response = ', response)
+
+        if (response.didCancel) {
+          alert('User cancelled camera picker')
+          return
+        } else if (response.errorCode == 'camera_unavailable') {
+          alert('Camera not available on device')
+          return
+        } else if (response.errorCode == 'permission') {
+          alert('Permission not satisfied')
+          return
+        } else if (response.errorCode == 'others') {
+          alert(response.errorMessage)
+          return
+        }
+        setFilePath(response)
+      })
+    }
+  }
+
+  const chooseFile = (type) => {
+    let options = {
+      mediaType: type,
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+    }
+    launchImageLibrary(options, (response) => {
+      console.log('Response = ', response)
+
+      if (response.didCancel) {
+        alert('User cancelled camera picker')
+        return
+      } else if (response.errorCode == 'camera_unavailable') {
+        alert('Camera not available on device')
+        return
+      } else if (response.errorCode == 'permission') {
+        alert('Permission not satisfied')
+        return
+      } else if (response.errorCode == 'others') {
+        alert(response.errorMessage)
+        return
+      }
+      setFilePath(response)
+    })
+  }
   return (
     <SafeAreaView style={theme.styles.safeArea}>
       <AvatarIcon />
@@ -54,7 +162,11 @@ const HomePage = () => {
             post, tweet or image to see if it is accurate...🤔
           </Text>
           <View style={styles.card}>
-            <TouchableOpacity style={styles.button} title={'Log In to Verify'}>
+            <TouchableOpacity
+              style={styles.button}
+              title={'Log In to Verify'}
+              onPress={() => chooseFile('photo')}
+            >
               <Text
                 style={{
                   color: theme.colors.white,
@@ -63,6 +175,21 @@ const HomePage = () => {
                 }}
               >
                 Verify and Image or Post
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonReverse}
+              title={'Log In to Verify'}
+              onPress={() => captureImage('photo')}
+            >
+              <Text
+                style={{
+                  color: theme.colors.primaryPurple,
+                  fontSize: theme.typeface.textMedium,
+                  fontFamily: theme.typeface.fontFamily,
+                }}
+              >
+                Take a New Photo
               </Text>
             </TouchableOpacity>
           </View>
@@ -77,6 +204,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.colors.primaryPurple,
     borderRadius: 10,
+    color: theme.colors.white,
+    fontSize: 30,
+    marginTop: 15,
+    padding: 25,
+    width: 300,
+  },
+  buttonReverse: {
+    alignItems: 'center',
+    backgroundColor: theme.colors.white,
+    borderColor: theme.colors.primaryPurple,
+    borderRadius: 10,
+    borderWidth: 1,
     color: theme.colors.white,
     fontSize: 30,
     marginTop: 20,
