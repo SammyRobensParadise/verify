@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView, Text } from 'react-native'
 import { getDataObject } from '../../utils/store/store-handlers'
 import { createOneButtonAlert } from '../../components/alerts/Alerts'
+import theme from '../../components/theme/theme'
 import { KEYS } from '../../utils/store/keys'
 
 const HomePage = () => {
@@ -21,7 +22,7 @@ const HomePage = () => {
       })
   }, [])
   return (
-    <SafeAreaView>
+    <SafeAreaView style={theme.styles.safeArea}>
       <Text>welcome</Text>
       <Text>{userInfo.nickname}</Text>
     </SafeAreaView>

@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-color-literals */
+import { StyleSheet } from 'react-native'
 const theme = {
   colors: {
     white: '#ffffff',
@@ -11,6 +13,12 @@ const theme = {
     textMedium: 20,
     textLarge: 30,
   },
+  styles: StyleSheet.create({
+    safeArea: {
+      backgroundColor: '#7000FF',
+      flex: 0,
+    },
+  }),
 }
 
 export default theme

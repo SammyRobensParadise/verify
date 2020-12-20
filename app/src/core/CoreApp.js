@@ -1,18 +1,17 @@
 import React from 'react'
 import 'react-native-gesture-handler'
 import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomePage from './Home'
 
-const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
 const CoreApp = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Verify ⚡️" component={HomePage} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Verify ⚡️" component={HomePage} />
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
