@@ -1,7 +1,8 @@
 import React from 'react'
-import Svg, { Path, Circle, Mask } from 'react-native-svg'
+import Svg, { Path, Circle, Mask, Defs, LinearGradient, Stop } from 'react-native-svg'
+import { Dimensions } from 'react-native'
 
-export const LogoV = ({ props }) => {
+export const LogoV = () => {
   return (
     <Svg
       width={100}
@@ -9,7 +10,6 @@ export const LogoV = ({ props }) => {
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
     >
       <Path fill="#7000FF" d="M0 0h100v100H0z" />
       <Circle cx={50} cy={50} r={49.5} fill="#fff" stroke="#fff" />
@@ -40,6 +40,40 @@ export const LogoV = ({ props }) => {
         fill="#7000FF"
         mask="url(#prefix__a)"
       />
+    </Svg>
+  )
+}
+
+export const Slime = () => {
+  return (
+    <Svg
+      width={500}
+      height={120}
+      viewBox="0 0 375 90"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M374.5 0H0v75c1.5 1.667 8.5-14.8 24.5-26 20-14 44.806-6.355 63.5 5.5 20.5 13 41 58.5 82 20.5s63-45 76-30 30 39 66.5 36.5c29.2-2 58.333-32 62-45V0z"
+        fill="#7000FF"
+      />
+      <Path
+        d="M374.5 0H0v75c1.5 1.667 8.5-14.8 24.5-26 20-14 44.806-6.355 63.5 5.5 20.5 13 41 58.5 82 20.5s63-45 76-30 30 39 66.5 36.5c29.2-2 58.333-32 62-45V0z"
+        fill="url(#prefix__paint0_linear)"
+      />
+      <Defs>
+        <LinearGradient
+          id="prefix__paint0_linear"
+          x1={187.25}
+          y1={0}
+          x2={187}
+          y2={90}
+          gradientUnits="userSpaceOnUse"
+        >
+          <Stop offset={0.12} stopColor="#fff" stopOpacity={0} />
+          <Stop offset={1} stopColor="#fff" stopOpacity={0.74} />
+        </LinearGradient>
+      </Defs>
     </Svg>
   )
 }
