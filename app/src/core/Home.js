@@ -44,7 +44,6 @@ const HomePage = () => {
           title: 'Camera Permission',
           message: 'App needs camera permission',
         })
-        // If CAMERA Permission is granted
         return granted === PermissionsAndroid.RESULTS.GRANTED
       } catch (err) {
         console.warn(err)
@@ -63,7 +62,6 @@ const HomePage = () => {
             message: 'App needs write permission',
           },
         )
-        // If WRITE_EXTERNAL_STORAGE Permission is granted
         return granted === PermissionsAndroid.RESULTS.GRANTED
       } catch (err) {
         console.warn(err)
@@ -90,13 +88,13 @@ const HomePage = () => {
         console.log('Response = ', response)
 
         if (response.didCancel) {
-          alert('User cancelled camera picker')
+          alert('No Image Taken')
           return
         } else if (response.errorCode == 'camera_unavailable') {
           alert('Camera not available on device')
           return
         } else if (response.errorCode == 'permission') {
-          alert('Permission not satisfied')
+          alert('Permission Denied')
           return
         } else if (response.errorCode == 'others') {
           alert(response.errorMessage)
@@ -118,13 +116,13 @@ const HomePage = () => {
       console.log('Response = ', response)
 
       if (response.didCancel) {
-        alert('User cancelled camera picker')
+        alert('Cancelled')
         return
       } else if (response.errorCode == 'camera_unavailable') {
         alert('Camera not available on device')
         return
       } else if (response.errorCode == 'permission') {
-        alert('Permission not satisfied')
+        alert('Permission Denied')
         return
       } else if (response.errorCode == 'others') {
         alert(response.errorMessage)
