@@ -24,6 +24,7 @@ const HomePage = () => {
         )
       })
   }, [])
+
   return (
     <SafeAreaView style={theme.styles.safeArea}>
       <AvatarIcon />
