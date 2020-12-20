@@ -12,6 +12,9 @@ const theme = {
     textSmall: 16,
     textMedium: 20,
     textLarge: 30,
+    textBold: '500',
+    textLight: '200',
+    textHeavy: '700',
   },
   styles: StyleSheet.create({
     safeArea: {
