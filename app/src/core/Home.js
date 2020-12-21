@@ -15,9 +15,9 @@ import { createOneButtonAlert } from '../../components/alerts/Alerts'
 import theme from '../../components/theme/theme'
 import { KEYS } from '../../utils/store/keys'
 import AvatarIcon from '../../components/elements/Avatar'
-import { Slime } from '../../components/svg/Vectors'
+import { Slime, Settings } from '../../components/svg/Vectors'
 
-const HomePage = () => {
+const HomePage = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
@@ -134,6 +134,7 @@ const HomePage = () => {
   return (
     <SafeAreaView style={theme.styles.safeArea}>
       <AvatarIcon />
+
       <View style={{ backgroundColor: theme.colors.white, width: '100%', padding: 0 }}>
         <Slime />
         <View style={styles.container}>
