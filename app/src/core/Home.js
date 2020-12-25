@@ -14,9 +14,10 @@ import { SECURE_KEY } from '@env'
 import { getDataObject } from '../../utils/store/store-handlers'
 import { createOneButtonAlert } from '../../components/alerts/Alerts'
 import theme from '../../components/theme/theme'
+import ImagePreview from '../../components/elements/ImagePreview'
 import { KEYS } from '../../utils/store/keys'
 import AvatarIcon from '../../components/elements/Avatar'
-import { Slime, Settings } from '../../components/svg/Vectors'
+import { Slime } from '../../components/svg/Vectors'
 
 const HomePage = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({})
@@ -24,8 +25,6 @@ const HomePage = ({ navigation }) => {
   useEffect(() => {
     getDataObject(KEYS.USER_INFO.toString())
       .then((data) => {
-        console.log('user-data', data)
-        console.log(SECURE_KEY)
         setUserInfo(data)
       })
       .catch((e) => {
@@ -37,7 +36,8 @@ const HomePage = ({ navigation }) => {
       })
   }, [])
 
-  const [filePath, setFilePath] = useState({})
+  const [file, setFile] = useState({})
+  const [showImagePreview, setShowImagePreview] = useState(false)
 
   const requestCameraPermission = async () => {
     if (Platform.OS === 'android') {
@@ -87,8 +87,6 @@ const HomePage = ({ navigation }) => {
     let isStoragePermitted = await requestExternalWritePermission()
     if (isCameraPermitted && isStoragePermitted) {
       launchCamera(options, (response) => {
-        console.log('Response = ', response)
-
         if (response.didCancel) {
           alert('No Image Taken')
           return
@@ -102,7 +100,8 @@ const HomePage = ({ navigation }) => {
           alert(response.errorMessage)
           return
         }
-        setFilePath(response)
+        setFile(response)
+        setShowImagePreview(true)
       })
     }
   }
@@ -110,13 +109,9 @@ const HomePage = ({ navigation }) => {
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
       quality: 1,
     }
     launchImageLibrary(options, (response) => {
-      console.log('Response = ', response)
-
       if (response.didCancel) {
         alert('Cancelled')
         return
@@ -130,9 +125,15 @@ const HomePage = ({ navigation }) => {
         alert(response.errorMessage)
         return
       }
-      setFilePath(response)
+      setFile(response)
+      setShowImagePreview(true)
     })
   }
+
+  if (showImagePreview) {
+    return <ImagePreview uri={file.uri} imageName={file.fileName} />
+  }
+
   return (
     <SafeAreaView style={theme.styles.safeArea}>
       <AvatarIcon />
@@ -165,7 +166,7 @@ const HomePage = ({ navigation }) => {
           <View style={styles.card}>
             <TouchableOpacity
               style={styles.button}
-              title={'Log In to Verify'}
+              title={'Choose Photo'}
               onPress={() => chooseFile('photo')}
             >
               <Text
@@ -180,7 +181,7 @@ const HomePage = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.buttonReverse}
-              title={'Log In to Verify'}
+              title={'Take Photo'}
               onPress={() => captureImage('photo')}
             >
               <Text

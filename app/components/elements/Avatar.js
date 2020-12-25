@@ -13,7 +13,6 @@ const AvatarIcon = () => {
   useEffect(() => {
     getDataObject(KEYS.USER_INFO.toString())
       .then((data) => {
-        console.log(data.picture)
         setSource(data.picture)
         isLoading(false)
       })

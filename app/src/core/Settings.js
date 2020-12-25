@@ -14,7 +14,6 @@ const SettingsPage = () => {
   useEffect(() => {
     getDataObject(KEYS.USER_INFO.toString())
       .then((data) => {
-        console.log(data)
         setUserInfo(data)
       })
       .catch((e) => {
