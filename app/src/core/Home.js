@@ -21,6 +21,8 @@ import { Slime } from '../../components/svg/Vectors'
 
 const HomePage = ({ navigation }) => {
   const [userInfo, setUserInfo] = useState({})
+  const [file, setFile] = useState({})
+  const [showImagePreview, setShowImagePreview] = useState(false)
 
   useEffect(() => {
     getDataObject(KEYS.USER_INFO.toString())
@@ -35,9 +37,6 @@ const HomePage = ({ navigation }) => {
         )
       })
   }, [])
-
-  const [file, setFile] = useState({})
-  const [showImagePreview, setShowImagePreview] = useState(false)
 
   const requestCameraPermission = async () => {
     if (Platform.OS === 'android') {
@@ -94,7 +93,7 @@ const HomePage = ({ navigation }) => {
           alert('Camera not available on device')
           return
         } else if (response.errorCode == 'permission') {
-          alert('Permission Denied')
+          alert('Permission Denied. Grant Verify access to your camera in your device settings')
           return
         } else if (response.errorCode == 'others') {
           alert(response.errorMessage)
@@ -113,13 +112,12 @@ const HomePage = ({ navigation }) => {
     }
     launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        alert('Cancelled')
         return
       } else if (response.errorCode == 'camera_unavailable') {
         alert('Camera not available on device')
         return
       } else if (response.errorCode == 'permission') {
-        alert('Permission Denied')
+        alert('Permission Denied. Grant Verify access to your photos in your device settings')
         return
       } else if (response.errorCode == 'others') {
         alert(response.errorMessage)
@@ -131,13 +129,14 @@ const HomePage = ({ navigation }) => {
   }
 
   if (showImagePreview) {
-    return <ImagePreview uri={file.uri} imageName={file.fileName} />
+    return <ImagePreview uri={file.uri} imageName={file.fileName} cancel={setShowImagePreview} />
   }
 
   return (
     <SafeAreaView style={theme.styles.safeArea}>
-      <AvatarIcon />
-
+      <View style={{ alignItems: 'flex-end', marginRight: 20, paddingTop: 10 }}>
+        <AvatarIcon />
+      </View>
       <View style={{ backgroundColor: theme.colors.white, width: '100%', padding: 0 }}>
         <Slime />
         <View style={styles.container}>

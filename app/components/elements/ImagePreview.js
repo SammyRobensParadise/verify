@@ -35,7 +35,11 @@ const ImagePreview = ({ uri, imageName, cancel }) => {
               Analyze
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonReverse} title={'Take Photo'}>
+          <TouchableOpacity
+            style={styles.buttonReverse}
+            title={'Take Photo'}
+            onPress={() => cancel(false)}
+          >
             <Text
               style={{
                 color: theme.colors.primaryPurple,
