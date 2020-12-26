@@ -129,7 +129,14 @@ const HomePage = ({ navigation }) => {
   }
 
   if (showImagePreview) {
-    return <ImagePreview uri={file.uri} imageName={file.fileName} cancel={setShowImagePreview} />
+    return (
+      <ImagePreview
+        uri={file.uri}
+        imageName={file.fileName}
+        cancel={setShowImagePreview}
+        navigation={navigation}
+      />
+    )
   }
 
   return (

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { View, Image, SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import theme from '../theme/theme'
 
-const ImagePreview = ({ uri, imageName, cancel }) => {
+const ImagePreview = ({ uri, imageName, cancel, navigation }) => {
   const u = uri
-  console.log(u)
+  const imn = imageName
   return (
     <SafeAreaView>
       <View
@@ -24,7 +24,11 @@ const ImagePreview = ({ uri, imageName, cancel }) => {
           Analyze Image? 🧠
         </Text>
         <View style={styles.card}>
-          <TouchableOpacity style={styles.button} title={'Choose Photo'}>
+          <TouchableOpacity
+            style={styles.button}
+            title={'Choose Photo'}
+            onPress={() => navigation.navigate('Loading', { iUri: u, iName: imn })}
+          >
             <Text
               style={{
                 color: theme.colors.white,
@@ -60,6 +64,8 @@ ImagePreview.propTypes = {
   uri: PropTypes.string,
   imageName: PropTypes.string,
   cancel: PropTypes.func,
+  navigation: PropTypes.any,
+  fileDetails: PropTypes.object,
 }
 
 const styles = StyleSheet.create({

@@ -20,10 +20,6 @@ const Core = () => {
   )
 }
 
-const Loader = () => {
-  return <LoadingPage />
-}
-
 const CoreApp = () => {
   return (
     <NavigationContainer>
@@ -33,7 +29,7 @@ const CoreApp = () => {
         }}
       >
         <Stack.Screen name="Core" component={Core} />
-        <Stack.Screen name="Loading" component={Loader} />
+        <Stack.Screen name="Loading" component={LoadingPage} />
       </Stack.Navigator>
     </NavigationContainer>
   )
