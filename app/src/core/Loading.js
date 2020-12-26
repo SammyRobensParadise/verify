@@ -1,13 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { SECURE_KEY } from '@env'
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native'
-import theme from '../../components/theme/theme'
+import { API_BASE_URL } from '../../utils/urls/urls'
+import { uploadImageToS3 } from '../../utils/images/image-handlers'
 
-const LoadingPage = ({ route, navigation }) => {
+import theme from '../../components/theme/theme'
+import axios from 'axios'
+
+const LoadingPage = ({ route }) => {
   const { iUri, iName } = route.params
   const [currentAnalysisStatus, updateCurrentAnalysisStatus] = useState(1)
-  console.log(`URI: ${iUri}`, `NAME: ${iName}`)
-
+  useEffect(() => {
+    const analyzeText = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/user/get-image-url`, {
+          headers: { authorization: `Bearer ${SECURE_KEY}` },
+        })
+        const { uploadURL, photoFilename } = res.data
+        updateCurrentAnalysisStatus(currentAnalysisStatus + 1)
+        try {
+          const uploadResponse = await uploadImageToS3(uploadURL, iUri)
+          console.log(uploadResponse)
+        } catch (err) {
+          console.log(err)
+        }
+      } catch (err) {
+        alert('Unable to analyize photos')
+        return
+      }
+    }
+    analyzeText()
+  }, [])
   return (
     <SafeAreaView>
       <View style={{ height: '100%' }}>
@@ -56,9 +80,29 @@ const CurrentAnalysisState = ({ phase }) => {
   }
 
   return (
-    <View>
-      <Text>{`Step ${phase.toString()}/5`}</Text>
-      <Text>{message}</Text>
+    <View style={{ alignItems: 'center', marginTop: 40 }}>
+      <Text
+        style={{
+          fontFamily: theme.typeface.fontFamily,
+          fontSize: theme.typeface.textMedium,
+          fontWeight: theme.typeface.textLight,
+          color: theme.colors.primaryPurple,
+          flex: 0,
+          paddingBottom: 10,
+        }}
+      >{`Step ${phase.toString()}/5`}</Text>
+      <Text
+        style={{
+          fontFamily: theme.typeface.fontFamily,
+          fontSize: theme.typeface.textMedium,
+          fontWeight: theme.typeface.textLight,
+          color: theme.colors.primaryPurple,
+          flex: 0,
+          paddingBottom: 0,
+        }}
+      >
+        {message}
+      </Text>
     </View>
   )
 }

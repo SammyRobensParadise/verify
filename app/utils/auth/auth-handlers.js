@@ -25,7 +25,6 @@ export const _onLoginWithInfo = async () => {
     })
     .then(async (credentials) => {
       const UserInfo = await _getUserInfo(credentials.accessToken)
-      debugger
       return { ...credentials, userInfo: UserInfo }
     })
     .catch((error) => {
