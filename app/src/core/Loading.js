@@ -14,16 +14,13 @@ const LoadingPage = ({ route }) => {
   useEffect(() => {
     const analyzeText = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/user/get-image-url`, {
-          headers: { authorization: `Bearer ${SECURE_KEY}` },
-        })
-        const { uploadURL, photoFilename } = res.data
         updateCurrentAnalysisStatus(currentAnalysisStatus + 1)
         try {
-          const uploadResponse = await uploadImageToS3(uploadURL, iUri)
+          const uploadResponse = await uploadImageToS3(iUri)
           console.log(uploadResponse)
         } catch (err) {
           console.log(err)
+          alert(err)
         }
       } catch (err) {
         alert('Unable to analyize photos')

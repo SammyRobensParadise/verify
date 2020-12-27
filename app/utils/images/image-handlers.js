@@ -1,22 +1,23 @@
 import { SECURE_KEY } from '@env'
+import axios from 'axios'
+import { API_BASE_URL } from '../urls/urls'
 import ImgToBase64 from 'react-native-image-base64'
 
 export const getBlob = async (dataUri) => {
-  const stagedEncoded = await ImgToBase64.getBase64String(dataUri)
-  console.log(stagedEncoded)
-  const binary = atob(stagedEncoded)
-  const array = []
-  for (let i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i))
-  }
-  return new Blob([new Uint8Array(array)], { type: 'image/jpeg' })
+  const encodedImage = `data:image/jpeg;base64,${await ImgToBase64.getBase64String(dataUri)}`
+  return encodedImage
 }
 
-export const uploadImageToS3 = async (presignedUrl, data) => {
+export const uploadImageToS3 = async (data) => {
   const imageBody = await getBlob(data)
-  console.log('image body= ' + imageBody)
-  return fetch(presignedUrl, {
-    method: 'PUT',
-    body: imageBody,
-  })
+  const uploadedToS3 = await axios.put(
+    `${API_BASE_URL}/upload`,
+    { image: imageBody },
+    {
+      headers: {
+        Authorization: `Bearer ${SECURE_KEY}`,
+      },
+    },
+  )
+  console.log(uploadedToS3)
 }

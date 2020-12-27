@@ -19,6 +19,7 @@
     "eslint": "^7.16.0",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-native": "^3.10.0",
+    "image-data-uri": "^2.0.1",
     "patch-package": "^6.2.2",
     "postinstall-postinstall": "^2.1.0",
     "prop-types": "^15.7.2",
