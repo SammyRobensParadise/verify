@@ -8,11 +8,19 @@ export const getBlob = async (dataUri) => {
   return encodedImage
 }
 
-export const uploadImageToS3 = async (data) => {
-  const imageBody = await getBlob(data)
+export const getImageInfo = (file) => {
+  const { fileName, type, uri } = file
+  const File = { name: fileName, uri: uri, type: type }
+  const body = new FormData()
+  body.append('file', File)
+  return body
+}
+
+export const uploadImageToS3 = async (file) => {
+  const imageBody = getImageInfo(file)
   const uploadedToS3 = await axios.put(
     `${API_BASE_URL}/upload`,
-    { image: imageBody },
+    { file: imageBody },
     {
       headers: {
         Authorization: `Bearer ${SECURE_KEY}`,

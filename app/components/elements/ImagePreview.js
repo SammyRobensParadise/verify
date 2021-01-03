@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 import { View, Image, SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import theme from '../theme/theme'
 
-const ImagePreview = ({ uri, imageName, cancel, navigation }) => {
-  const u = uri
-  const imn = imageName
+const ImagePreview = ({ file, cancel, navigation }) => {
   return (
     <SafeAreaView>
       <View
         style={{ backgroundColor: theme.colors.white, width: '100%', padding: 0, height: '100%' }}
       >
-        <Image source={{ uri: u }} resizeMode={'contain'} style={styles.image} />
+        <Image source={{ uri: file.uri }} resizeMode={'contain'} style={styles.image} />
         <Text
           style={{
             fontFamily: theme.typeface.fontFamily,
@@ -27,7 +25,7 @@ const ImagePreview = ({ uri, imageName, cancel, navigation }) => {
           <TouchableOpacity
             style={styles.button}
             title={'Choose Photo'}
-            onPress={() => navigation.navigate('Loading', { iUri: u, iName: imn })}
+            onPress={() => navigation.navigate('Loading', { ifile: file })}
           >
             <Text
               style={{
@@ -61,11 +59,9 @@ const ImagePreview = ({ uri, imageName, cancel, navigation }) => {
 }
 
 ImagePreview.propTypes = {
-  uri: PropTypes.string,
-  imageName: PropTypes.string,
+  file: PropTypes.object,
   cancel: PropTypes.func,
   navigation: PropTypes.any,
-  fileDetails: PropTypes.object,
 }
 
 const styles = StyleSheet.create({

@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { SECURE_KEY } from '@env'
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native'
-import { API_BASE_URL } from '../../utils/urls/urls'
 import { uploadImageToS3 } from '../../utils/images/image-handlers'
-
 import theme from '../../components/theme/theme'
-import axios from 'axios'
 
 const LoadingPage = ({ route }) => {
-  const { iUri, iName } = route.params
+  const { ifile } = route.params
   const [currentAnalysisStatus, updateCurrentAnalysisStatus] = useState(1)
   useEffect(() => {
     const analyzeText = async () => {
       try {
         updateCurrentAnalysisStatus(currentAnalysisStatus + 1)
         try {
-          const uploadResponse = await uploadImageToS3(iUri)
+          const uploadResponse = await uploadImageToS3(ifile)
           console.log(uploadResponse)
         } catch (err) {
           console.log(err)

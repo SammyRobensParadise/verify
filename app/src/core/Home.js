@@ -1,5 +1,6 @@
 /* eslint-disable react-native/split-platform-components */
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   SafeAreaView,
   Text,
@@ -10,7 +11,6 @@ import {
   PermissionsAndroid,
 } from 'react-native'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
-import { SECURE_KEY } from '@env'
 import { getDataObject } from '../../utils/store/store-handlers'
 import { createOneButtonAlert } from '../../components/alerts/Alerts'
 import theme from '../../components/theme/theme'
@@ -129,14 +129,7 @@ const HomePage = ({ navigation }) => {
   }
 
   if (showImagePreview) {
-    return (
-      <ImagePreview
-        uri={file.uri}
-        imageName={file.fileName}
-        cancel={setShowImagePreview}
-        navigation={navigation}
-      />
-    )
+    return <ImagePreview file={file} cancel={setShowImagePreview} navigation={navigation} />
   }
 
   return (
@@ -205,6 +198,10 @@ const HomePage = ({ navigation }) => {
       </View>
     </SafeAreaView>
   )
+}
+
+HomePage.propTypes = {
+  navigation: PropTypes.object,
 }
 
 const styles = StyleSheet.create({
