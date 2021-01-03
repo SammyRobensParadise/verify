@@ -10,16 +10,14 @@ const LoadingPage = ({ route }) => {
   useEffect(() => {
     const analyzeText = async () => {
       try {
-        updateCurrentAnalysisStatus(currentAnalysisStatus + 1)
-        try {
-          const uploadResponse = await uploadImageToS3(ifile)
-          console.log(uploadResponse)
-        } catch (err) {
-          console.log(err)
-          alert(err)
+        updateCurrentAnalysisStatus(2)
+        const uploadResponse = await uploadImageToS3(ifile)
+        if (uploadResponse.err) {
+          throw new Error('Unable to upload photo')
         }
+        updateCurrentAnalysisStatus(3)
       } catch (err) {
-        alert('Unable to analyize photos')
+        alert(err)
         return
       }
     }
@@ -67,6 +65,9 @@ const CurrentAnalysisState = ({ phase }) => {
     case 5:
       message = `Almost done...`
       break
+    case 6:
+      message = `Done!`
+      break
     default:
       message = `Analyzing...`
       break
@@ -83,7 +84,7 @@ const CurrentAnalysisState = ({ phase }) => {
           flex: 0,
           paddingBottom: 10,
         }}
-      >{`Step ${phase.toString()}/5`}</Text>
+      >{`Step ${phase.toString()}/6`}</Text>
       <Text
         style={{
           fontFamily: theme.typeface.fontFamily,
