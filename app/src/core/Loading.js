@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native'
-import { uploadImageToS3 } from '../../utils/images/image-handlers'
+import { getImageText, uploadImageToS3 } from '../../utils/images/image-handlers'
 import theme from '../../components/theme/theme'
 
 const LoadingPage = ({ route }) => {
@@ -16,7 +16,9 @@ const LoadingPage = ({ route }) => {
           throw new Error('Unable to upload photo')
         }
         updateCurrentAnalysisStatus(3)
+        const textResponse = await getImageText(uploadResponse)
       } catch (err) {
+        debugger
         alert(err)
         return
       }
