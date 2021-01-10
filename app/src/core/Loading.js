@@ -16,6 +16,7 @@ const LoadingPage = ({ route }) => {
       }
       updateCurrentAnalysisStatus(3)
       const textResponse = await getImageText(uploadResponse)
+      console.log(textResponse)
     }
     analyzeText()
   }, [])

@@ -45,10 +45,6 @@ export const getImageText = async (data) => {
       'Content-Type': 'application/json',
     },
   }
-  try {
-    const r = await axios.post(`${API_URL}/user/retrieve-image-text`, data, config)
-    console.log(r)
-  } catch (err) {
-    console.log(err)
-  }
+  const r = await axios.post(`${API_URL}/user/retrieve-image-text`, data, config)
+  return r
 }
