@@ -1,4 +1,7 @@
 import { S3 } from 'aws-sdk'
+import axios from 'axios'
+import { decode } from 'base64-arraybuffer'
+
 import {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
@@ -6,8 +9,6 @@ import {
   API_BASE_DOMAIN_DEV,
   SECURE_KEY,
 } from '@env'
-import { decode } from 'base64-arraybuffer'
-import axios from 'axios'
 var fs = require('react-native-fs')
 
 const API_URL = API_BASE_DOMAIN_DEV
@@ -38,11 +39,16 @@ export const uploadImageToS3 = async (file) => {
 }
 
 export const getImageText = async (data) => {
-  const body = {
-    data: data,
+  var config = {
+    headers: {
+      Authorization: `Bearer ${SECURE_KEY}`,
+      'Content-Type': 'application/json',
+    },
   }
-  const r = await axios.get(`${API_URL}/user/retrieve-image-text`, body, {
-    headers: { Authorization: `Bearer ${SECURE_KEY}` },
-  })
-  console.log(r)
+  try {
+    const r = await axios.post(`${API_URL}/user/retrieve-image-text`, data, config)
+    console.log(r)
+  } catch (err) {
+    console.log(err)
+  }
 }

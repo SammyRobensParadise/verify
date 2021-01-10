@@ -9,19 +9,13 @@ const LoadingPage = ({ route }) => {
   const [currentAnalysisStatus, updateCurrentAnalysisStatus] = useState(1)
   useEffect(() => {
     const analyzeText = async () => {
-      try {
-        updateCurrentAnalysisStatus(2)
-        const uploadResponse = await uploadImageToS3(ifile)
-        if (uploadResponse.err) {
-          throw new Error('Unable to upload photo')
-        }
-        updateCurrentAnalysisStatus(3)
-        const textResponse = await getImageText(uploadResponse)
-      } catch (err) {
-        debugger
-        alert(err)
-        return
+      updateCurrentAnalysisStatus(2)
+      const uploadResponse = await uploadImageToS3(ifile)
+      if (uploadResponse.err) {
+        throw new Error('Unable to upload photo')
       }
+      updateCurrentAnalysisStatus(3)
+      const textResponse = await getImageText(uploadResponse)
     }
     analyzeText()
   }, [])
