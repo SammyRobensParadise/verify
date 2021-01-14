@@ -9,14 +9,22 @@ const LoadingPage = ({ route }) => {
   const [currentAnalysisStatus, updateCurrentAnalysisStatus] = useState(1)
   useEffect(() => {
     const analyzeText = async () => {
-      updateCurrentAnalysisStatus(2)
-      const uploadResponse = await uploadImageToS3(ifile)
-      if (uploadResponse.err) {
-        throw new Error('Unable to upload photo')
+      try {
+        updateCurrentAnalysisStatus(2)
+        const uploadResponse = await uploadImageToS3(ifile)
+        if (uploadResponse.err) {
+          throw new Error('Unable to upload photo')
+        }
+        updateCurrentAnalysisStatus(3)
+        const textResponse = await getImageText(uploadResponse)
+        if (textResponse.status !== 200) {
+          throw new Error('Unable to extract text from image')
+        }
+        updateCurrentAnalysisStatus(4)
+        console.log(textResponse)
+      } catch (error) {
+        alert(`${error}`)
       }
-      updateCurrentAnalysisStatus(3)
-      const textResponse = await getImageText(uploadResponse)
-      console.log(textResponse)
     }
     analyzeText()
   }, [])

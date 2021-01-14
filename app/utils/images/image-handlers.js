@@ -6,12 +6,13 @@ import {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
   AWS_IMAGE_BUCKET_NAME,
-  API_BASE_DOMAIN_DEV,
+  /* API_BASE_DOMAIN_DEV, */
+  API_BASE_DOMAIN,
   SECURE_KEY,
 } from '@env'
 var fs = require('react-native-fs')
 
-const API_URL = API_BASE_DOMAIN_DEV
+const API_URL = API_BASE_DOMAIN
 
 export const uploadImageToS3 = async (file) => {
   const s3Bucket = new S3({
