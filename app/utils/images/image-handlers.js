@@ -25,7 +25,6 @@ export const uploadImageToS3 = async (file) => {
   let contentDeposition = 'inline;filename="' + file.fileName + '"'
   const base64 = await fs.readFile(file.uri, 'base64')
   const arrayBuffer = decode(base64)
-  /* s3Bucket.createBucket(() => { */
   const params = {
     Bucket: `${AWS_IMAGE_BUCKET_NAME}`,
     Key: file.fileName,
