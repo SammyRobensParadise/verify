@@ -3,8 +3,8 @@ import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
 import {
     getImageText,
     uploadImageToS3,
-    S3ObjectReference,
-    ImageTextReference,
+    S3ObjectTypes,
+    ImageTextTypes,
     getImageSearchResults
 } from '../../utils/images/image-handlers';
 import theme from '../../components/theme/theme';
@@ -22,14 +22,14 @@ const LoadingPage = ({ route }: { route: any }): JSX.Element => {
         const analyzeText = async (): Promise<Boolean> => {
             try {
                 updateCurrentAnalysisStatus(2);
-                const uploadResponse: S3ObjectReference = await uploadImageToS3(
+                const uploadResponse: S3ObjectTypes = await uploadImageToS3(
                     ifile
                 );
                 if (uploadResponse.err) {
                     throw new Error('Unable to upload photo');
                 }
                 updateCurrentAnalysisStatus(3);
-                const textResponse: ImageTextReference = await getImageText(
+                const textResponse: ImageTextTypes = await getImageText(
                     uploadResponse
                 );
                 if (textResponse.status !== HTTP_OK) {
