@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
 import {
     getImageText,
-    uploadImageToS3
+    uploadImageToS3,
+    S3ObjectReference,
+    ImageTextReference
 } from '../../utils/images/image-handlers';
 import theme from '../../components/theme/theme';
 
@@ -16,22 +18,28 @@ const LoadingPage = ({ route }: { route: any }): JSX.Element => {
         updateCurrentAnalysisStatus
     ] = useState<PhaseType>(1);
     useEffect(() => {
-        const analyzeText = async (): Promise<any> => {
+        const analyzeText = async (): Promise<Boolean> => {
             try {
                 updateCurrentAnalysisStatus(2);
-                const uploadResponse = await uploadImageToS3(ifile);
+                const uploadResponse: S3ObjectReference = await uploadImageToS3(
+                    ifile
+                );
                 if (uploadResponse.err) {
                     throw new Error('Unable to upload photo');
                 }
                 updateCurrentAnalysisStatus(3);
-                const textResponse = await getImageText(uploadResponse);
+                const textResponse: ImageTextReference = await getImageText(
+                    uploadResponse
+                );
                 if (textResponse.status !== HTTP_OK) {
                     throw new Error('Unable to extract text from image');
                 }
                 updateCurrentAnalysisStatus(4);
                 console.log(textResponse);
+                return true;
             } catch (error) {
                 alert(`${error}`);
+                return false;
             }
         };
         analyzeText();

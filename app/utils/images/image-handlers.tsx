@@ -2,8 +2,6 @@
 import { S3 } from 'aws-sdk';
 import axios from 'axios';
 import { decode } from 'base64-arraybuffer';
-
-// @ts-ignore
 import {
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
@@ -17,7 +15,53 @@ var fs = require('react-native-fs');
 
 const API_URL = API_BASE_DOMAIN;
 
-export const uploadImageToS3 = async (file: any): Promise<Object> => {
+export interface S3ObjectReference {
+    Bucket: string;
+    ETtag?: String;
+    Key: String;
+    Location: String;
+    key?: String;
+}
+
+type TextConfig = {
+    adapter: any;
+    data: string;
+    headers: Object;
+    maxBodyLength: number;
+    maxContentLength: number;
+    method: string;
+    timeout: number;
+    transformRequest: Array<any>;
+    transformResponse: Array<any>;
+    url: string;
+    validateStatus: any;
+    xsrfCookieName: string;
+    xsrfHeaderName: string;
+};
+
+type TextDetection = {
+    Confidence: number;
+    DetectedText: string;
+    Geometry: Object;
+    Id: number;
+    Type: string;
+};
+type TextData = {
+    TextDetections: Array<TextDetection>;
+    TextModelVersion: String;
+};
+export interface ImageTextReference {
+    config: TextConfig;
+    data: TextData;
+    headers: Object;
+    request: EventTarget;
+    status: number;
+    statusText: undefined;
+}
+
+export const uploadImageToS3 = async (
+    file: any
+): Promise<S3ObjectReference> => {
     const s3Bucket = new S3({
         accessKeyId: `${AWS_ACCESS_KEY_ID}`,
         secretAccessKey: `${AWS_SECRET_ACCESS_KEY}`,
@@ -35,25 +79,28 @@ export const uploadImageToS3 = async (file: any): Promise<Object> => {
         ContentDisposition: contentDeposition,
         ContentType: contentType
     };
-    const res: Object = await new Promise((resolve, reject) => {
-        s3Bucket.upload(params, (err: Error, data: Object) =>
+    const res: S3ObjectReference = await new Promise((resolve, reject) => {
+        s3Bucket.upload(params, (err: Error, data: S3ObjectReference) =>
             err == null ? resolve(data) : reject(err)
         );
     });
     return res;
 };
 
-export const getImageText = async (data: any): Promise<any> => {
+export const getImageText = async (
+    data: S3ObjectReference
+): Promise<ImageTextReference> => {
     var config = {
         headers: {
             Authorization: `Bearer ${SECURE_KEY}`,
             'Content-Type': 'application/json'
         }
     };
-    const r = await axios.post(
+    const r: ImageTextReference = await axios.post(
         `${API_URL}/user/retrieve-image-text`,
         data,
         config
     );
+    console.log(r);
     return r;
 };
