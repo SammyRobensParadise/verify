@@ -44,7 +44,9 @@ const LoadingPage = ({ route }: { route: any }): JSX.Element => {
                         'Unable to extract get search results from image'
                     );
                 }
+                updateCurrentAnalysisStatus(5);
                 console.log(searchResponse);
+                updateCurrentAnalysisStatus(6);
                 return true;
             } catch (error) {
                 alert(`${error}`);
