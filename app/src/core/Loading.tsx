@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
 import {
     getImageText,
@@ -7,16 +6,17 @@ import {
 } from '../../utils/images/image-handlers';
 import theme from '../../components/theme/theme';
 
+const HTTP_OK: number = 200;
 type PhaseType = 1 | 2 | 3 | 4 | 5 | 6;
 
-const LoadingPage = ({ route }: { route: any }) => {
+const LoadingPage = ({ route }: { route: any }): JSX.Element => {
     const { ifile } = route.params;
     const [
         currentAnalysisStatus,
         updateCurrentAnalysisStatus
     ] = useState<PhaseType>(1);
     useEffect(() => {
-        const analyzeText = async () => {
+        const analyzeText = async (): Promise<any> => {
             try {
                 updateCurrentAnalysisStatus(2);
                 const uploadResponse = await uploadImageToS3(ifile);
@@ -25,7 +25,7 @@ const LoadingPage = ({ route }: { route: any }) => {
                 }
                 updateCurrentAnalysisStatus(3);
                 const textResponse = await getImageText(uploadResponse);
-                if (textResponse.status !== 200) {
+                if (textResponse.status !== HTTP_OK) {
                     throw new Error('Unable to extract text from image');
                 }
                 updateCurrentAnalysisStatus(4);
@@ -69,7 +69,7 @@ const LoadingPage = ({ route }: { route: any }) => {
     );
 };
 
-const CurrentAnalysisState = ({ phase }: { phase: PhaseType }) => {
+const CurrentAnalysisState = ({ phase }: { phase: PhaseType }): JSX.Element => {
     let message = '';
     switch (phase) {
         case 1:

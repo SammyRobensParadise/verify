@@ -43,7 +43,7 @@ export const uploadImageToS3 = async (file: any): Promise<Object> => {
     return res;
 };
 
-export const getImageText = async (data: any) => {
+export const getImageText = async (data: any): Promise<any> => {
     var config = {
         headers: {
             Authorization: `Bearer ${SECURE_KEY}`,
