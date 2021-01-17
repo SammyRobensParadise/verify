@@ -123,12 +123,4 @@ const CurrentAnalysisState = ({ phase }: { phase: PhaseType }) => {
     );
 };
 
-LoadingPage.propTypes = {
-    route: PropTypes.object,
-    navigation: PropTypes.any
-};
-
-CurrentAnalysisState.propTypes = {
-    phase: PropTypes.number
-};
 export default LoadingPage;
