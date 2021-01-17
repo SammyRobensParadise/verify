@@ -4,7 +4,8 @@ import {
     getImageText,
     uploadImageToS3,
     S3ObjectReference,
-    ImageTextReference
+    ImageTextReference,
+    getImageSearchResults
 } from '../../utils/images/image-handlers';
 import theme from '../../components/theme/theme';
 
@@ -35,7 +36,15 @@ const LoadingPage = ({ route }: { route: any }): JSX.Element => {
                     throw new Error('Unable to extract text from image');
                 }
                 updateCurrentAnalysisStatus(4);
-                console.log(textResponse);
+                const searchResponse: any = await getImageSearchResults(
+                    textResponse
+                );
+                if (searchResponse.status !== HTTP_OK) {
+                    throw new Error(
+                        'Unable to extract get search results from image'
+                    );
+                }
+                console.log(searchResponse);
                 return true;
             } catch (error) {
                 alert(`${error}`);
