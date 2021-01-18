@@ -1238,6 +1238,11 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-native-auth0@^2.5.5":
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/@types/react-native-auth0/-/react-native-auth0-2.5.5.tgz#44eec2948a47bdfd9952d7ac3222902994346d00"
+  integrity sha512-wcSNNkRrTirdMENvLsNp0BKkkuZ6UpHCu+Rv1NQc+SjfIIxwezA0e3lhamjQJGNkG+uR8mZyZiUMwVvwp88EsQ==
+
 "@types/react-native-vector-icons@^6.4.6":
   version "6.4.6"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.6.tgz#848e3b14572def56212cafbf5cb1254b445bfb41"
