@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import { SafeAreaView, View, Text, ScrollView } from 'react-native';
 
 interface LoadingProps {
     route: any;
@@ -13,10 +13,12 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
     return (
         <SafeAreaView>
-            <View style={{ alignItems: 'center', marginTop: 40 }}>
-                <Text>{totalEstimatedMatches}</Text>
-                <Text>{webSearchUrl}</Text>
-            </View>
+            <ScrollView>
+                <View style={{ alignItems: 'center', marginTop: 40 }}>
+                    <Text>{totalEstimatedMatches}</Text>
+                    <Text>{webSearchUrl}</Text>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };

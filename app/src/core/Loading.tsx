@@ -50,7 +50,10 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
                     );
                 }
                 updateCurrentAnalysisStatus(6);
-                navigation.navigate('Viewer', { search: searchResponse });
+                navigation.navigate('Core', {
+                    screen: 'Viewer',
+                    params: { search: searchResponse }
+                });
                 return true;
             } catch (error) {
                 alert(`${error}`);

@@ -46,9 +46,10 @@ const ImagePreview = ({ file, cancel, navigation }: ImagePreviewProps) => {
                 <View style={styles.card}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() =>
-                            navigation.navigate('Loading', { ifile: file })
-                        }
+                        onPress={() => {
+                            navigation.navigate('Loading', { ifile: file });
+                            cancel(false);
+                        }}
                     >
                         <Text
                             style={{

@@ -16,7 +16,8 @@ const Core = () => {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Verify ⚡️" component={HomePage} />
-            <Tab.Screen name="Settings" component={SettingsPage} />
+            <Tab.Screen name="Settings ⚙️" component={SettingsPage} />
+            <Stack.Screen name="Viewer" component={ViewerPage} />
         </Tab.Navigator>
     );
 };
@@ -31,7 +32,6 @@ const CoreApp = () => {
             >
                 <Stack.Screen name="Core" component={Core} />
                 <Stack.Screen name="Loading" component={LoadingPage} />
-                <Stack.Screen name="Viewer" component={ViewerPage} />
             </Stack.Navigator>
         </NavigationContainer>
     );

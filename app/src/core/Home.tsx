@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
     SafeAreaView,
     Text,
@@ -22,7 +21,7 @@ import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime } from '../../components/svg/Vectors';
 
-const HomePage = ({ navigation }: { navigation: any }) => {
+const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
     const [userInfo, setUserInfo] = useState<Object>({});
     const [file, setFile] = useState({});
     const [showImagePreview, setShowImagePreview] = useState<boolean>(false);
@@ -262,10 +261,6 @@ const HomePage = ({ navigation }: { navigation: any }) => {
             </View>
         </SafeAreaView>
     );
-};
-
-HomePage.propTypes = {
-    navigation: PropTypes.object
 };
 
 const styles = StyleSheet.create({
