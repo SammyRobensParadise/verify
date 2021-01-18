@@ -9,8 +9,8 @@ interface LoadingProps {
 const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
     const { search } = route.params;
     const { webPages } = search.data;
-    const { pages: value, totalEstimatedMatches, webSearchUrl } = webPages;
-
+    const { value: pages, totalEstimatedMatches, webSearchUrl } = webPages;
+    console.log(pages);
     return (
         <SafeAreaView>
             <ScrollView>

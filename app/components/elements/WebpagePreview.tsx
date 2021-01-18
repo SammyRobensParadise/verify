@@ -1,12 +1,32 @@
 import React from 'react';
-import { SafeAreaView, View, Text, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Linking } from 'react-native';
 
-interface WebpagePreviewProps {
-    search: any;
+export type SearchPreviewReference = {
+    dateLastCrawled: string;
+    displayUrl: string;
+    id: URL;
+    isFamilyFriendly: boolean;
+    isNavigational: boolean;
+    language: string;
+    name: string;
+    snippet: string;
+    url: string;
+};
+
+export interface WebpagePreviewReference {
+    search: SearchPreviewReference;
 }
 
-const WebpagePreview = ({ search }: WebpagePreviewProps): JSX.Element => {
-    return <View></View>;
+const WebpagePreview = ({ search }: WebpagePreviewReference): JSX.Element => {
+    const { name, url, snippet } = search;
+    return (
+        <View>
+            <TouchableOpacity onPress={() => Linking.openURL(url)}>
+                <Text>{name}</Text>
+                <Text>{snippet}</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
 export default WebpagePreview;
