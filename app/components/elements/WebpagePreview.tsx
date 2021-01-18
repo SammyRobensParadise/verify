@@ -11,7 +11,7 @@ import theme from '../theme/theme';
 export type SearchPreviewReference = {
     dateLastCrawled: string;
     displayUrl: string;
-    id: URL;
+    id: string;
     isFamilyFriendly: boolean;
     isNavigational: boolean;
     language: string;
