@@ -12,7 +12,12 @@ import theme from '../../components/theme/theme';
 const HTTP_OK: number = 200;
 type PhaseType = 1 | 2 | 3 | 4 | 5 | 6;
 
-const LoadingPage = ({ route }: { route: any }): JSX.Element => {
+interface LoadingProps {
+    route: any;
+    navigation: any;
+}
+
+const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
     const { ifile } = route.params;
     const [
         currentAnalysisStatus,
@@ -44,9 +49,8 @@ const LoadingPage = ({ route }: { route: any }): JSX.Element => {
                         'Unable to extract get search results from image'
                     );
                 }
-                updateCurrentAnalysisStatus(5);
-                console.log(searchResponse);
                 updateCurrentAnalysisStatus(6);
+                navigation.navigate('Viewer', { search: searchResponse });
                 return true;
             } catch (error) {
                 alert(`${error}`);

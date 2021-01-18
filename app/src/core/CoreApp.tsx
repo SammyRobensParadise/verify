@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomePage from './Home';
 import SettingsPage from './Settings';
 import LoadingPage from './Loading';
+import ViewerPage from './Viewer';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ const CoreApp = () => {
             >
                 <Stack.Screen name="Core" component={Core} />
                 <Stack.Screen name="Loading" component={LoadingPage} />
+                <Stack.Screen name="Viewer" component={ViewerPage} />
             </Stack.Navigator>
         </NavigationContainer>
     );
