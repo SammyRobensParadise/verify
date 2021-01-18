@@ -17,7 +17,9 @@ export interface WebpagePreviewReference {
     search: SearchPreviewReference;
 }
 
-const WebpagePreview = ({ search }: WebpagePreviewReference): JSX.Element => {
+export const WebpagePreview = ({
+    search
+}: WebpagePreviewReference): JSX.Element => {
     const { name, url, snippet } = search;
     return (
         <View>
@@ -28,5 +30,3 @@ const WebpagePreview = ({ search }: WebpagePreviewReference): JSX.Element => {
         </View>
     );
 };
-
-export default WebpagePreview;
