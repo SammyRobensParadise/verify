@@ -12,17 +12,26 @@ import ViewerPage from './Viewer';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const Core = () => {
+const Core = ({ route }: { route: any }) => {
+    const { authUser } = route.params;
     return (
         <Tab.Navigator>
             <Tab.Screen name="Verify ⚡️" component={HomePage} />
-            <Tab.Screen name="Settings ⚙️" component={SettingsPage} />
+            <Tab.Screen
+                name="Settings ⚙️"
+                component={SettingsPage}
+                initialParams={{ authUser: authUser }}
+            />
             <Stack.Screen name="Viewer" component={ViewerPage} />
         </Tab.Navigator>
     );
 };
 
-const CoreApp = () => {
+const CoreApp = ({
+    authUser
+}: {
+    authUser: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -30,7 +39,11 @@ const CoreApp = () => {
                     headerShown: false
                 }}
             >
-                <Stack.Screen name="Core" component={Core} />
+                <Stack.Screen
+                    name="Core"
+                    component={Core}
+                    initialParams={{ authUser: authUser }}
+                />
                 <Stack.Screen name="Loading" component={LoadingPage} />
             </Stack.Navigator>
         </NavigationContainer>

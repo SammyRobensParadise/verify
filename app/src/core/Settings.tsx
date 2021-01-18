@@ -14,9 +14,14 @@ import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime, Settings } from '../../components/svg/Vectors';
 
-const SettingsPage = () => {
+const SettingsPage = ({ route }: { route: any }) => {
+    const { authUser } = route.params;
     const [userInfo, setUserInfo] = useState({});
 
+    const handleLogout = async (): Promise<Boolean> => {
+        authUser(false);
+        return true;
+    };
     useEffect(() => {
         getDataObject(KEYS.USER_INFO.toString())
             .then((data) => {
@@ -35,7 +40,15 @@ const SettingsPage = () => {
 
     return (
         <SafeAreaView style={theme.styles.safeArea}>
-            <AvatarIcon />
+            <View
+                style={{
+                    alignItems: 'flex-end',
+                    marginRight: 20,
+                    paddingTop: 10
+                }}
+            >
+                <AvatarIcon />
+            </View>
             <View
                 style={{
                     backgroundColor: theme.colors.white,
@@ -59,7 +72,10 @@ const SettingsPage = () => {
                     </Text>
 
                     <View style={styles.card}>
-                        <TouchableOpacity style={styles.buttonReverse}>
+                        <TouchableOpacity
+                            style={styles.buttonReverse}
+                            onPress={handleLogout}
+                        >
                             <Text
                                 style={{
                                     color: theme.colors.primaryPurple,

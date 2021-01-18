@@ -9,7 +9,11 @@ import CoreApp from './src/core/CoreApp';
 
 const App = () => {
     const [loggedIn, authUser] = useState(false);
-    return !loggedIn ? <Landing authUser={authUser} /> : <CoreApp />;
+    return !loggedIn ? (
+        <Landing authUser={authUser} />
+    ) : (
+        <CoreApp authUser={authUser} />
+    );
 };
 
 export default App;

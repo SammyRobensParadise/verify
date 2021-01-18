@@ -13,7 +13,11 @@ import { storeDataObject } from '../../utils/store/store-handlers';
 import { KEYS } from '../../utils/store/keys';
 import { LogoV } from '../../components/svg/Vectors';
 
-const Landing = ({ authUser }: { authUser: any }): JSX.Element => {
+const Landing = ({
+    authUser
+}: {
+    authUser: React.Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element => {
     const _handleLogin = async () => {
         const res = await _onLoginWithInfo();
         if (res.accessToken) {
