@@ -32,9 +32,6 @@ export const _onLoginWithInfo = async () => {
         });
 };
 
-/**
- * @returns {success}
- */
 export const _onLogout = async () => {
     return auth0.webAuth
         .clearSession()
