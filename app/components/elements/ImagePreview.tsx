@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
     View,
     Image,
@@ -79,12 +78,6 @@ const ImagePreview = ({ file, cancel, navigation }: ImagePreviewProps) => {
             </View>
         </SafeAreaView>
     );
-};
-
-ImagePreview.propTypes = {
-    file: PropTypes.object,
-    cancel: PropTypes.func,
-    navigation: PropTypes.any
 };
 
 const styles = StyleSheet.create({
