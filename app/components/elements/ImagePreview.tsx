@@ -20,7 +20,7 @@ const ImagePreview = ({ file, cancel, navigation }: ImagePreviewProps) => {
         <SafeAreaView>
             <View
                 style={{
-                    backgroundColor: theme.colors.white,
+                    backgroundColor: theme.colors.offWhite,
                     width: '100%',
                     padding: 0,
                     height: '100%'
@@ -52,7 +52,7 @@ const ImagePreview = ({ file, cancel, navigation }: ImagePreviewProps) => {
                     >
                         <Text
                             style={{
-                                color: theme.colors.white,
+                                color: theme.colors.offWhite,
                                 fontSize: theme.typeface.textMedium,
                                 fontFamily: theme.typeface.fontFamily
                             }}
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: theme.colors.primaryPurple,
         borderRadius: 10,
-        color: theme.colors.white,
+        color: theme.colors.offWhite,
         fontSize: 30,
         marginTop: 15,
         padding: 25,
@@ -93,11 +93,11 @@ const styles = StyleSheet.create({
     },
     buttonReverse: {
         alignItems: 'center',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         borderColor: theme.colors.primaryPurple,
         borderRadius: 10,
         borderWidth: 1,
-        color: theme.colors.white,
+        color: theme.colors.offWhite,
         fontSize: 30,
         marginTop: 20,
         padding: 25,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     card: {
         alignItems: 'center',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         borderRadius: 7,
         elevation: 5,
         height: '40%',

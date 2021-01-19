@@ -197,7 +197,7 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
             </View>
             <View
                 style={{
-                    backgroundColor: theme.colors.white,
+                    backgroundColor: theme.colors.offWhite,
                     width: '100%',
                     padding: 0
                 }}
@@ -234,7 +234,7 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
                         >
                             <Text
                                 style={{
-                                    color: theme.colors.white,
+                                    color: theme.colors.offWhite,
                                     fontSize: theme.typeface.textMedium,
                                     fontFamily: theme.typeface.fontFamily
                                 }}
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: theme.colors.primaryPurple,
         borderRadius: 10,
-        color: theme.colors.white,
+        color: theme.colors.offWhite,
         fontSize: 30,
         marginTop: 15,
         padding: 25,
@@ -276,11 +276,11 @@ const styles = StyleSheet.create({
     },
     buttonReverse: {
         alignItems: 'center',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         borderColor: theme.colors.primaryPurple,
         borderRadius: 10,
         borderWidth: 1,
-        color: theme.colors.white,
+        color: theme.colors.offWhite,
         fontSize: 30,
         marginTop: 20,
         padding: 25,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     },
     card: {
         alignItems: 'center',
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         borderRadius: 7,
         elevation: 5,
         height: '30%',
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84
     },
     container: {
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         height: '100%',
         marginTop: 0,
         padding: 30

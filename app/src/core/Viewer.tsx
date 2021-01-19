@@ -58,7 +58,7 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         height: '100%',
         marginTop: 0,
         padding: 30

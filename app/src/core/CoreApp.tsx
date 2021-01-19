@@ -23,7 +23,8 @@ const Core = ({ route }: { route: any }) => {
                     color: theme.colors.black
                 },
                 style: {
-                    paddingTop: 10
+                    paddingTop: 10,
+                    backgroundColor: theme.colors.offWhite
                 }
             }}
         >

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 30,
         marginVertical: 10,
         padding: 10,
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.offWhite,
         borderRadius: 10,
         shadowColor: theme.colors.black,
         shadowOffset: {
