@@ -36,20 +36,20 @@ const Core = ({ route }: { route: any }) => {
                 }}
             />
             <Tab.Screen
+                name="Viewer"
+                component={ViewerPage}
+                options={{
+                    tabBarLabel: 'View',
+                    tabBarIcon: () => <AntDesign name="infocirlceo" size={20} />
+                }}
+            />
+            <Tab.Screen
                 name="Settings"
                 component={SettingsPage}
                 initialParams={{ authUser: authUser }}
                 options={{
                     tabBarLabel: 'Settings',
                     tabBarIcon: () => <AntDesign name="setting" size={20} />
-                }}
-            />
-            <Tab.Screen
-                name="Viewer"
-                component={ViewerPage}
-                options={{
-                    tabBarLabel: 'View',
-                    tabBarIcon: () => <AntDesign name="infocirlceo" size={20} />
                 }}
             />
         </Tab.Navigator>
