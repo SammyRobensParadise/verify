@@ -27,9 +27,7 @@ const Landing = ({
     };
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>
-                Verify the accuracy of social content
-            </Text>
+            <Text style={styles.text}>Verify social content</Text>
             <View style={styles.card}>
                 <LogoV />
                 <View>
@@ -44,7 +42,7 @@ const Landing = ({
                                 fontFamily: theme.typeface.fontFamily
                             }}
                         >
-                            Login to Verify
+                            Login
                         </Text>
                     </TouchableOpacity>
                 </View>
