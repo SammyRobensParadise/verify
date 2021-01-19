@@ -42,8 +42,10 @@ const theme = {
     colors: {
         white: '#ffffff',
         primaryPurple: '#7000FF',
-        offWhite: '#F5FCFF',
-        black: '#000000'
+        oceanBlue: '#3E92CC',
+        offWhite: '#FFFAFF',
+        toneRed: '#D8315B',
+        black: '#1E1B18'
     },
     typeface: {
         fontFamily: 'Helvetica',
