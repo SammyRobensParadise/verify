@@ -12,11 +12,12 @@ import { createOneButtonAlert } from '../../components/alerts/Alerts';
 import theme from '../../components/theme/theme';
 import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
-import { Slime, Settings } from '../../components/svg/Vectors';
+import { Slime } from '../../components/svg/Vectors';
+import { UserInfoType } from 'types/types';
 
 const SettingsPage = ({ route }: { route: any }) => {
     const { authUser } = route.params;
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState<UserInfoType>();
 
     const handleLogout = async (): Promise<Boolean> => {
         authUser(false);
@@ -26,6 +27,7 @@ const SettingsPage = ({ route }: { route: any }) => {
         getDataObject(KEYS.USER_INFO.toString())
             .then((data) => {
                 setUserInfo(data);
+                console.log(userInfo);
             })
             .catch((e) => {
                 createOneButtonAlert({
@@ -49,42 +51,17 @@ const SettingsPage = ({ route }: { route: any }) => {
             >
                 <AvatarIcon />
             </View>
-            <View
-                style={{
-                    backgroundColor: theme.colors.offWhite,
-                    width: '100%',
-                    padding: 0
-                }}
-            >
+            <View style={styles.viewContainer}>
                 <Slime />
                 <View style={styles.container}>
-                    <Text
-                        style={{
-                            fontFamily: theme.typeface.fontFamily,
-                            fontSize: theme.typeface.textMedium,
-                            fontWeight: theme.typeface.textBold,
-                            color: theme.colors.primaryPurple,
-                            flex: 0,
-                            paddingBottom: 20
-                        }}
-                    >
-                        Settings
-                    </Text>
-
+                    <Text style={styles.titleText}>Profile</Text>
+                    <Text style={styles.titleText}>App</Text>
                     <View style={styles.card}>
                         <TouchableOpacity
                             style={styles.buttonReverse}
                             onPress={handleLogout}
                         >
-                            <Text
-                                style={{
-                                    color: theme.colors.primaryPurple,
-                                    fontSize: theme.typeface.textMedium,
-                                    fontFamily: theme.typeface.fontFamily
-                                }}
-                            >
-                                Logout
-                            </Text>
+                            <Text style={styles.buttonReverseText}>Logout</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -97,7 +74,7 @@ const styles = StyleSheet.create({
     buttonReverse: {
         alignItems: 'center',
         backgroundColor: theme.colors.offWhite,
-        borderColor: theme.colors.primaryPurple,
+        borderColor: theme.colors.toneRed,
         borderRadius: 10,
         borderWidth: 1,
         color: theme.colors.offWhite,
@@ -105,6 +82,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         padding: 25,
         width: 300
+    },
+    buttonReverseText: {
+        color: theme.colors.toneRed,
+        fontSize: theme.typeface.textMedium,
+        fontFamily: theme.typeface.fontFamily
     },
     card: {
         alignItems: 'center',
@@ -122,11 +104,24 @@ const styles = StyleSheet.create({
 
         shadowRadius: 3.84
     },
+    titleText: {
+        fontFamily: theme.typeface.fontFamily,
+        fontSize: theme.typeface.textMedium,
+        fontWeight: theme.typeface.textLight,
+        color: theme.colors.primaryPurple,
+        flex: 0,
+        paddingBottom: 20
+    },
     container: {
         backgroundColor: theme.colors.offWhite,
         height: '100%',
         marginTop: 0,
         padding: 30
+    },
+    viewContainer: {
+        backgroundColor: theme.colors.offWhite,
+        width: '100%',
+        padding: 0
     }
 });
 

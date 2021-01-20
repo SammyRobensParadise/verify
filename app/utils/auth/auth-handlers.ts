@@ -1,5 +1,6 @@
 import Auth0 from 'react-native-auth0';
-var credentials = require('../../auth0-configuration');
+import { Auth0Credentials, UserInfoType } from 'types/types';
+var credentials: Auth0Credentials = require('../../auth0-configuration');
 const auth0 = new Auth0(credentials);
 
 /**
@@ -24,7 +25,9 @@ export const _onLoginWithInfo = async () => {
             scope: 'openid profile email'
         })
         .then(async (credentials: any) => {
-            const UserInfo = await _getUserInfo(credentials.accessToken);
+            const UserInfo: UserInfoType = await _getUserInfo(
+                credentials.accessToken
+            );
             return { ...credentials, userInfo: UserInfo };
         })
         .catch((error: Error) => {
@@ -53,14 +56,14 @@ export const _getUserInfo = async (accessToken: string) => {
         }
     };
     return fetch(url, { ...options })
-        .then((raw) => {
+        .then((raw: Response) => {
             return raw.json();
         })
-        .catch((error) => {
+        .catch((error: Error) => {
             return error;
         });
 };
 
-export const _getBaseAuthURL = () => {
+export const _getBaseAuthURL = (): string => {
     return 'https://swstudios.us.auth0.com';
 };

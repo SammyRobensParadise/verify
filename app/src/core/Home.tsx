@@ -20,15 +20,16 @@ import ImagePreview from '../../components/elements/ImagePreview';
 import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime } from '../../components/svg/Vectors';
+import { UserInfoType } from 'types/types';
 
 const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
-    const [userInfo, setUserInfo] = useState<Object>({});
+    const [userInfo, setUserInfo] = useState<UserInfoType>();
     const [file, setFile] = useState({});
     const [showImagePreview, setShowImagePreview] = useState<boolean>(false);
 
     useEffect(() => {
         getDataObject(KEYS.USER_INFO.toString())
-            .then((data: Object) => {
+            .then((data: UserInfoType | undefined) => {
                 setUserInfo(data);
             })
             .catch((e: Error) => {
