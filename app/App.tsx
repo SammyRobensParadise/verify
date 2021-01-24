@@ -8,7 +8,7 @@ import Landing from './src/AuthWall/Landing';
 import CoreApp from './src/core/CoreApp';
 
 const App = () => {
-    const [loggedIn, authUser] = useState(false);
+    const [loggedIn, authUser] = useState<boolean>(false);
     return !loggedIn ? (
         <Landing authUser={authUser} />
     ) : (
