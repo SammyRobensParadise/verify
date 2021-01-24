@@ -1,13 +1,26 @@
 import React from 'react';
+import Auth0 from 'react-native-auth0';
+import { Auth0Credentials, UserInfoType } from 'types/types';
+var credentials: Auth0Credentials = require('../../auth0-configuration');
+const auth0 = new Auth0(credentials);
 
 const AuthContext = React.createContext(null);
-
 const AuthActionId = {
-    UPDATE_INIT: 1
+    LOGIN: 1,
+    LOGIN_SUCCESS: 2,
+    LOGIN_WITH_INFO: 3,
+    LOGIN_WITHINFO_SUCCESS: 4,
+    LOGOUT: 5,
+    LOGOUT_SUCCESS: 6,
+    GET_USER_INFO: 7,
+    GET_USER_INFO_SUCCESS: 8,
+    GET_BASE_AUTH_URL: 9
 };
 
 type AuthState = {
     isLoggedIn: boolean;
+    userInfo: UserInfoType | null;
+    isLoading: boolean;
 };
 
 type ActionType = {
@@ -16,14 +29,18 @@ type ActionType = {
 };
 
 const AuthDefaultState: AuthState = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    userInfo: null,
+    isLoading: false
 };
 
 const AuthReducer = (state: AuthState, action: ActionType) => {
     switch (action.type) {
-        case AuthActionId.UPDATE_INIT: {
+        case AuthActionId.LOGIN: {
             return {
-                ...state
+                ...state,
+                isLoading: true,
+                isLoggedIn: false
             };
         }
         default: {
@@ -32,17 +49,22 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
     }
 };
 
-const loginUser = (dispatch: React.Dispatch<ActionType>) => async (
-    AuthUserId: string
-) => {
-    dispatch({ type: AuthActionId.UPDATE_INIT, payload: {} });
-};
-
-type AuthAuthorizeType = {
-    code: string;
-    // Need redirect uri from the original request
-    redirect_uri: string;
-    error?: string;
+const loginUser = (dispatch: React.Dispatch<ActionType>) => async () => {
+    dispatch({ type: AuthActionId.LOGIN, payload: {} });
+    const raw = await auth0.webAuth
+        .authorize({
+            scope: 'openid profile email'
+        })
+        .then((credentials: any) => {
+            return credentials;
+        })
+        .catch((error: Error) => {
+            return error;
+        });
+    if (!raw.email) {
+        return;
+    }
+    dispatch({ type: AuthActionId.LOGIN_SUCCESS, payload: raw });
 };
 
 type AuthProviderProps = {
@@ -66,6 +88,6 @@ export const useAuth = () => {
     return {
         state,
         dispatch,
-        createAuthAssociation: loginUser(dispatch)
+        loginUser: loginUser(dispatch)
     };
 };
