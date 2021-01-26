@@ -7,13 +7,10 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-import { getDataObject } from '../../utils/store/store-handlers';
-import { createOneButtonAlert } from '../../components/alerts/Alerts';
+
 import theme from '../../components/theme/theme';
-import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime } from '../../components/svg/Vectors';
-import { UserInfoType } from 'types/types';
 import { useAuth } from '../../utils/auth/auth-context';
 
 const SettingsPage = () => {
