@@ -9,21 +9,13 @@ import {
 } from 'react-native';
 import theme from '../../components/theme/theme';
 import { _onLoginWithInfo } from '../../utils/auth/auth-handlers';
-import { storeDataObject } from '../../utils/store/store-handlers';
-import { KEYS } from '../../utils/store/keys';
 import { LogoV } from '../../components/svg/Vectors';
+import { useAuth } from '../../utils/auth/auth-context';
 
-const Landing = ({
-    authUser
-}: {
-    authUser: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element => {
+const Landing = (): JSX.Element => {
+    const { loginInfo } = useAuth();
     const _handleLogin = async () => {
-        const res = await _onLoginWithInfo();
-        if (res.accessToken) {
-            await storeDataObject(KEYS.USER_INFO, res.userInfo);
-            authUser(true);
-        }
+        await loginInfo();
     };
     return (
         <SafeAreaView style={styles.container}>

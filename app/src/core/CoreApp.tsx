@@ -14,8 +14,7 @@ import theme from '../../components/theme/theme';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const Core = ({ route }: { route: any }) => {
-    const { authUser } = route.params;
+const Core = () => {
     return (
         <Tab.Navigator
             tabBarOptions={{
@@ -47,7 +46,6 @@ const Core = ({ route }: { route: any }) => {
             <Tab.Screen
                 name="Settings"
                 component={SettingsPage}
-                initialParams={{ authUser: authUser }}
                 options={{
                     tabBarLabel: 'Settings',
                     tabBarIcon: () => <AntDesign name="setting" size={20} />
@@ -57,11 +55,7 @@ const Core = ({ route }: { route: any }) => {
     );
 };
 
-const CoreApp = ({
-    authUser
-}: {
-    authUser: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const CoreApp = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -69,11 +63,7 @@ const CoreApp = ({
                     headerShown: false
                 }}
             >
-                <Stack.Screen
-                    name="Core"
-                    component={Core}
-                    initialParams={{ authUser: authUser }}
-                />
+                <Stack.Screen name="Core" component={Core} />
                 <Stack.Screen name="Loading" component={LoadingPage} />
             </Stack.Navigator>
         </NavigationContainer>

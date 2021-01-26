@@ -14,30 +14,20 @@ import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime } from '../../components/svg/Vectors';
 import { UserInfoType } from 'types/types';
+import { useAuth } from '../../utils/auth/auth-context';
 
-const SettingsPage = ({ route }: { route: any }) => {
-    const { authUser } = route.params;
-    const [userInfo, setUserInfo] = useState<UserInfoType>();
-
+const SettingsPage = () => {
+    const { logout, user, state } = useAuth();
     const handleLogout = async (): Promise<Boolean> => {
-        authUser(false);
+        await logout();
         return true;
     };
     useEffect(() => {
-        getDataObject(KEYS.USER_INFO.toString())
-            .then((data) => {
-                setUserInfo(data);
-                console.log(userInfo);
-            })
-            .catch((e) => {
-                createOneButtonAlert({
-                    buttons: [
-                        { title: 'OK', event: () => {}, style: 'cancel' }
-                    ],
-                    title: 'Unable to load user information',
-                    message: e.toString()
-                });
-            });
+        const data = async () => {
+            await user();
+            console.log(state);
+        };
+        data();
     }, []);
 
     return (
