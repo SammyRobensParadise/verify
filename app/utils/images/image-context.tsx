@@ -37,7 +37,7 @@ type ActionType = {
     payload: Partial<ImageState>;
 };
 
-const AuthDefaultState: ImageState = {
+const ImageDefaultState: ImageState = {
     uploadedToS3: false,
     textExtracted: false,
     searchResultsExtracted: false,
@@ -45,7 +45,7 @@ const AuthDefaultState: ImageState = {
     error: false
 };
 
-const AuthReducer = (state: ImageState, action: ActionType) => {
+const ImageReducer = (state: ImageState, action: ActionType) => {
     switch (action.type) {
         case ImageActionId.UPLOAD: {
             return {
@@ -192,15 +192,15 @@ type ImageProviderProps = {
 };
 
 export const ImageProvider = (props: ImageProviderProps) => {
-    const [state, dispatch] = React.useReducer(AuthReducer, AuthDefaultState);
+    const [state, dispatch] = React.useReducer(ImageReducer, ImageDefaultState);
     const value: any = React.useMemo(() => [state, dispatch], [state]);
     return <ImageContext.Provider value={value} {...props} />;
 };
 
-export const useAuth = () => {
+export const useImage = () => {
     const context: any = React.useContext(ImageContext);
     if (!context) {
-        throw new Error('useAuth must be used within a AuthProvider');
+        throw new Error('useImage must be used within a ImageProvider');
     }
     const [state, dispatch] = context;
 
