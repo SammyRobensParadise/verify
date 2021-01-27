@@ -186,12 +186,12 @@ const searchResults = (dispatch: React.Dispatch<ActionType>) => async (
     });
 };
 
-type AuthProviderProps = {
+type ImageProviderProps = {
     children?: React.ReactNode;
     [key: string]: any; // there are some props passed to Provider which are necessary and will not load component.
 };
 
-export const AuthProvider = (props: AuthProviderProps) => {
+export const ImageProvider = (props: ImageProviderProps) => {
     const [state, dispatch] = React.useReducer(AuthReducer, AuthDefaultState);
     const value: any = React.useMemo(() => [state, dispatch], [state]);
     return <ImageContext.Provider value={value} {...props} />;
