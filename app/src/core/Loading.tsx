@@ -31,7 +31,6 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
         const analyzeText = async (): Promise<Boolean> => {
             try {
                 updateCurrentAnalysisStatus(2);
-                await upload(ifile);
                 const uploadResponse: S3ObjectTypes = await uploadImageToS3(
                     ifile
                 );

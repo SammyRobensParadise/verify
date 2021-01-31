@@ -21,7 +21,12 @@ const ImageActionId = {
     GET_IMAGE_SEARCH_RESULTS_SUCCESS: 8,
     GET_IMAGE_SEARCH_RESULTS_ERROR: 9
 };
-type ImageState = ImageTypes | S3ObjectTypes | ImageTextTypes | TextSearchTypes;
+type ImageState =
+    | null
+    | ImageTypes
+    | S3ObjectTypes
+    | ImageTextTypes
+    | TextSearchTypes;
 
 type ImageTypes = {
     uploadedToS3: boolean;
@@ -29,7 +34,7 @@ type ImageTypes = {
     searchResultsExtracted: boolean;
     isLoading: boolean;
     error: boolean;
-    data: ImageState | null;
+    data: any;
 };
 
 type ActionType = {
@@ -60,7 +65,6 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
             };
         }
         case ImageActionId.UPLOAD_SUCCESS: {
-            debugger;
             return {
                 ...state,
                 uploadedToS3: true,
@@ -89,7 +93,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: false,
                 searchResultsExtracted: false,
                 isLoading: true,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_TEXT_SUCCESS: {
@@ -161,6 +166,7 @@ const upload = (dispatch: React.Dispatch<ActionType>) => async (file: any) => {
         alert('Unable to Upload Photo to S3');
         return;
     }
+    debugger;
     dispatch({ type: ImageActionId.UPLOAD_SUCCESS, payload: raw });
 };
 
@@ -168,6 +174,7 @@ const imageText = (dispatch: React.Dispatch<ActionType>) => async (
     data: S3ObjectTypes
 ) => {
     dispatch({ type: ImageActionId.GET_IMAGE_TEXT, payload: {} });
+    debugger;
     const raw = await getImageText(data);
     if (raw.err) {
         dispatch({ type: ImageActionId.GET_IMAGE_TEXT_ERROR, payload: raw });
@@ -213,7 +220,6 @@ export const useImage = () => {
         throw new Error('useImage must be used within a ImageProvider');
     }
     const [state, dispatch] = context;
-
     return {
         state,
         dispatch,
