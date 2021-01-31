@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, View, Text, ScrollView, StyleSheet } from 'react-native';
 import {
     WebpagePreview,
     SearchPreviewReference
 } from '../../components/elements/WebpagePreview';
 import theme from '../../components/theme/theme';
+import { useImage } from '../../utils/images/image-context';
+import { useAuth } from '../../utils/auth/auth-context';
+
 interface LoadingProps {
     route: any;
     navigation?: any;
@@ -12,8 +15,21 @@ interface LoadingProps {
 
 const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
     if (route?.params) {
+        const { state: imageState } = useImage();
+        const { state: authState, user } = useAuth();
+        console.log(imageState, authState);
         const { search } = route.params;
         const { webPages } = search?.data;
+
+        useEffect(() => {
+            const data = async () => {
+                debugger;
+                await user(authState.authToken);
+                console.log(authState);
+            };
+            data();
+        }, [authState]);
+
         if (webPages !== undefined) {
             const { value: pages, totalEstimatedMatches } = webPages;
             const typePages: Array<SearchPreviewReference> = pages;

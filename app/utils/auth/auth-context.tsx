@@ -29,6 +29,7 @@ type AuthState = {
     isLoggedIn: boolean;
     userInfo: UserInfoType | null;
     isLoading: boolean;
+    authToken: string;
 };
 
 type ActionType = {
@@ -39,7 +40,8 @@ type ActionType = {
 const AuthDefaultState: AuthState = {
     isLoggedIn: false,
     userInfo: null,
-    isLoading: false
+    isLoading: false,
+    authToken: ''
 };
 
 const AuthReducer = (state: AuthState, action: ActionType) => {
@@ -55,7 +57,8 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
             return {
                 ...state,
                 isLoading: false,
-                isLoggedIn: true
+                isLoggedIn: true,
+                authToken: action.payload
             };
         }
         case AuthActionId.LOGIN_ERROR: {
@@ -63,21 +66,24 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
                 ...state,
                 isLoading: false,
                 isLoggedIn: false,
-                error: true
+                error: true,
+                authToken: action.payload
             };
         }
         case AuthActionId.LOGIN_WITH_INFO: {
             return {
                 ...state,
                 isLoading: true,
-                isLoggedIn: false
+                isLoggedIn: false,
+                authToken: action.payload
             };
         }
         case AuthActionId.LOGIN_WITHINFO_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
-                isLoggedIn: true
+                isLoggedIn: true,
+                authToken: action.payload
             };
         }
         case AuthActionId.LOGIN_WITHINFO_ERROR: {
@@ -85,7 +91,8 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
                 ...state,
                 isLoading: false,
                 isLoggedIn: false,
-                error: true
+                error: true,
+                authToken: action.payload
             };
         }
         case AuthActionId.LOGOUT: {
@@ -120,14 +127,16 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
             return {
                 ...state,
                 isLoading: false,
-                isLoggedIn: true
+                isLoggedIn: true,
+                userInfo: action.payload
             };
         }
         case AuthActionId.GET_USER_INFO_ERROR: {
             return {
                 ...state,
                 isLoading: false,
-                isLoggedIn: true
+                isLoggedIn: true,
+                userInfo: action.payload
             };
         }
         default: {
@@ -139,13 +148,16 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
 const login = (dispatch: React.Dispatch<ActionType>) => async () => {
     dispatch({ type: AuthActionId.LOGIN, payload: {} });
     const raw = await _onLogin();
-    dispatch({ type: AuthActionId.LOGIN_SUCCESS, payload: raw });
+    dispatch({ type: AuthActionId.LOGIN_SUCCESS, payload: raw.accessToken });
 };
 
 const loginInfo = (dispatch: React.Dispatch<ActionType>) => async () => {
     dispatch({ type: AuthActionId.LOGIN_WITH_INFO, payload: {} });
     const raw = await _onLoginWithInfo();
-    dispatch({ type: AuthActionId.LOGIN_WITHINFO_SUCCESS, payload: raw });
+    dispatch({
+        type: AuthActionId.LOGIN_WITHINFO_SUCCESS,
+        payload: raw.accessToken
+    });
 };
 
 const logout = (dispatch: React.Dispatch<ActionType>) => async () => {
@@ -154,10 +166,11 @@ const logout = (dispatch: React.Dispatch<ActionType>) => async () => {
     dispatch({ type: AuthActionId.LOGOUT_SUCCESS, payload: raw });
 };
 
-const user = (dispatch: React.Dispatch<ActionType>) => async () => {
+const user = (dispatch: React.Dispatch<ActionType>) => async (
+    token: string
+) => {
     dispatch({ type: AuthActionId.GET_USER_INFO, payload: {} });
-    const res = await _onLoginWithInfo();
-    const raw = await _getUserInfo(res.accessToken);
+    const raw = await _getUserInfo(token);
     dispatch({ type: AuthActionId.GET_USER_INFO_SUCCESS, payload: raw });
 };
 
@@ -167,6 +180,7 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = (props: AuthProviderProps) => {
+    // @ts-ignore
     const [state, dispatch] = React.useReducer(AuthReducer, AuthDefaultState);
     const value: any = React.useMemo(() => [state, dispatch], [state]);
     return <AuthContext.Provider value={value} {...props} />;
