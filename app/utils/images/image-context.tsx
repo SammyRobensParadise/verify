@@ -62,7 +62,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: true,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.UPLOAD_SUCCESS: {
@@ -73,7 +73,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: false,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.UPLOAD_ERROR: {
@@ -95,7 +95,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: true,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.GET_IMAGE_TEXT_SUCCESS: {
@@ -106,7 +106,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: false,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.GET_IMAGE_TEXT_ERROR: {
@@ -117,7 +117,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: false,
                 error: true,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS: {
@@ -128,7 +128,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: true,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS_SUCCESS: {
@@ -139,7 +139,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: true,
                 isLoading: false,
                 error: false,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS_ERROR: {
@@ -150,7 +150,7 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 searchResultsExtracted: false,
                 isLoading: false,
                 error: true,
-                data: action.payload
+                data: { ...state, ...action.payload }
             };
         }
         default: {
