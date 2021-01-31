@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../auth/auth-context';
 import {
     getImageSearchResults,
     getImageText,
@@ -164,24 +165,24 @@ const upload = (dispatch: React.Dispatch<ActionType>) => async (file: any) => {
     if (raw.err) {
         dispatch({ type: ImageActionId.UPLOAD_ERROR, payload: raw });
         alert('Unable to Upload Photo to S3');
-        return;
+        return null;
     }
-    debugger;
     dispatch({ type: ImageActionId.UPLOAD_SUCCESS, payload: raw });
+    return raw;
 };
 
 const imageText = (dispatch: React.Dispatch<ActionType>) => async (
     data: S3ObjectTypes
 ) => {
     dispatch({ type: ImageActionId.GET_IMAGE_TEXT, payload: {} });
-    debugger;
     const raw = await getImageText(data);
     if (raw.err) {
         dispatch({ type: ImageActionId.GET_IMAGE_TEXT_ERROR, payload: raw });
         alert('Unable to Get Text from Image');
-        return;
+        return null;
     }
     dispatch({ type: ImageActionId.GET_IMAGE_TEXT_SUCCESS, payload: raw });
+    return raw;
 };
 
 const searchResults = (dispatch: React.Dispatch<ActionType>) => async (
@@ -195,12 +196,13 @@ const searchResults = (dispatch: React.Dispatch<ActionType>) => async (
             payload: raw
         });
         alert('Unable to Get Search Results');
-        return;
+        return null;
     }
     dispatch({
         type: ImageActionId.GET_IMAGE_SEARCH_RESULTS_SUCCESS,
         payload: raw
     });
+    return raw;
 };
 
 type ImageProviderProps = {

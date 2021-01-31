@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
-import {
-    getImageText,
-    uploadImageToS3,
-    S3ObjectTypes,
-    ImageTextTypes,
-    getImageSearchResults
-} from '../../utils/images/image-handlers';
 import { useImage } from '../../utils/images/image-context';
 import theme from '../../components/theme/theme';
 
@@ -20,49 +13,31 @@ interface LoadingProps {
 
 const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
     const { ifile } = route.params;
-    const [
-        currentAnalysisStatus,
-        updateCurrentAnalysisStatus
-    ] = useState<PhaseType>(1);
-
-    const { state, upload, imageText, searchResults } = useImage();
+    const [status, statusUpdate] = useState<PhaseType>(1);
+    const { upload, imageText, searchResults } = useImage();
 
     useEffect(() => {
         const analyzeText = async (): Promise<Boolean> => {
-            try {
-                updateCurrentAnalysisStatus(2);
-                const uploadResponse: S3ObjectTypes = await uploadImageToS3(
-                    ifile
-                );
-                if (uploadResponse.err) {
-                    throw new Error('Unable to upload photo');
+            statusUpdate(2);
+            const d = await upload(ifile);
+            if (d) {
+                statusUpdate(3);
+                const txt = await imageText(d);
+                if (txt) {
+                    statusUpdate(4);
+                    const r = await searchResults(txt);
+                    statusUpdate(5);
+                    if (r) {
+                        statusUpdate(6);
+                        navigation.navigate('Core', {
+                            screen: 'Viewer',
+                            params: { search: r }
+                        });
+                        return true;
+                    }
                 }
-                updateCurrentAnalysisStatus(3);
-                const textResponse: ImageTextTypes = await getImageText(
-                    uploadResponse
-                );
-                if (textResponse.status !== HTTP_OK) {
-                    throw new Error('Unable to extract text from image');
-                }
-                updateCurrentAnalysisStatus(4);
-                const searchResponse: any = await getImageSearchResults(
-                    textResponse
-                );
-                if (searchResponse.status !== HTTP_OK) {
-                    throw new Error(
-                        'Unable to extract get search results from image'
-                    );
-                }
-                updateCurrentAnalysisStatus(6);
-                navigation.navigate('Core', {
-                    screen: 'Viewer',
-                    params: { search: searchResponse }
-                });
-                return true;
-            } catch (error) {
-                alert(`${error}`);
-                return false;
             }
+            return false;
         };
         analyzeText();
     }, []);
@@ -92,7 +67,7 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
                         size="large"
                         color={theme.colors.primaryPurple}
                     />
-                    <CurrentAnalysisState phase={currentAnalysisStatus} />
+                    <CurrentAnalysisState phase={status} />
                 </View>
             </View>
         </SafeAreaView>
