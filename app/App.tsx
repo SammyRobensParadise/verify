@@ -3,10 +3,11 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import Landing from './src/AuthWall/Landing';
 import CoreApp from './src/core/CoreApp';
 import { AuthProvider, useAuth } from './utils/auth/auth-context';
+import { ImageProvider } from './utils/images/image-context';
 
 const Authenticator = () => {
     const { state } = useAuth();
@@ -16,7 +17,9 @@ const Authenticator = () => {
 
 const App = () => (
     <AuthProvider>
-        <Authenticator />
+        <ImageProvider>
+            <Authenticator />
+        </ImageProvider>
     </AuthProvider>
 );
 

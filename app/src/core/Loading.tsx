@@ -7,6 +7,7 @@ import {
     ImageTextTypes,
     getImageSearchResults
 } from '../../utils/images/image-handlers';
+import { useImage } from '../../utils/images/image-context';
 import theme from '../../components/theme/theme';
 
 const HTTP_OK: number = 200;
@@ -23,10 +24,14 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
         currentAnalysisStatus,
         updateCurrentAnalysisStatus
     ] = useState<PhaseType>(1);
+
+    const { state, upload, imageText, searchResults } = useImage();
+
     useEffect(() => {
         const analyzeText = async (): Promise<Boolean> => {
             try {
                 updateCurrentAnalysisStatus(2);
+                await upload(ifile);
                 const uploadResponse: S3ObjectTypes = await uploadImageToS3(
                     ifile
                 );

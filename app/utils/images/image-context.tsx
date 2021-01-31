@@ -21,6 +21,7 @@ const ImageActionId = {
     GET_IMAGE_SEARCH_RESULTS_SUCCESS: 8,
     GET_IMAGE_SEARCH_RESULTS_ERROR: 9
 };
+type ImageState = ImageTypes | S3ObjectTypes | ImageTextTypes | TextSearchTypes;
 
 type ImageTypes = {
     uploadedToS3: boolean;
@@ -28,9 +29,8 @@ type ImageTypes = {
     searchResultsExtracted: boolean;
     isLoading: boolean;
     error: boolean;
+    data: ImageState | null;
 };
-
-type ImageState = ImageTypes | S3ObjectTypes | ImageTextTypes | TextSearchTypes;
 
 type ActionType = {
     type: number;
@@ -42,7 +42,8 @@ const ImageDefaultState: ImageState = {
     textExtracted: false,
     searchResultsExtracted: false,
     isLoading: false,
-    error: false
+    error: false,
+    data: null
 };
 
 const ImageReducer = (state: ImageState, action: ActionType) => {
@@ -54,17 +55,20 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: false,
                 searchResultsExtracted: false,
                 isLoading: true,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.UPLOAD_SUCCESS: {
+            debugger;
             return {
                 ...state,
                 uploadedToS3: true,
                 textExtracted: false,
                 searchResultsExtracted: false,
                 isLoading: false,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.UPLOAD_ERROR: {
@@ -74,7 +78,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: false,
                 searchResultsExtracted: false,
                 isLoading: false,
-                error: true
+                error: true,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_TEXT: {
@@ -94,7 +99,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: true,
                 searchResultsExtracted: false,
                 isLoading: false,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_TEXT_ERROR: {
@@ -104,7 +110,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: false,
                 searchResultsExtracted: false,
                 isLoading: false,
-                error: true
+                error: true,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS: {
@@ -114,7 +121,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: true,
                 searchResultsExtracted: false,
                 isLoading: true,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS_SUCCESS: {
@@ -124,7 +132,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: true,
                 searchResultsExtracted: true,
                 isLoading: false,
-                error: false
+                error: false,
+                data: action.payload
             };
         }
         case ImageActionId.GET_IMAGE_SEARCH_RESULTS_ERROR: {
@@ -134,7 +143,8 @@ const ImageReducer = (state: ImageState, action: ActionType) => {
                 textExtracted: true,
                 searchResultsExtracted: false,
                 isLoading: false,
-                error: true
+                error: true,
+                data: action.payload
             };
         }
         default: {
