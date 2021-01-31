@@ -21,7 +21,7 @@ const SettingsPage = () => {
     };
     useEffect(() => {
         const data = async () => {
-            await user();
+            await user(state.authToken);
             console.log(state);
         };
         data();
