@@ -7,6 +7,7 @@ import {
 import theme from '../../components/theme/theme';
 import { useImage } from '../../utils/images/image-context';
 import { useAuth } from '../../utils/auth/auth-context';
+import { _formatBlobs } from '../../utils/data/data-handlers';
 
 interface LoadingProps {
     route: any;
@@ -23,13 +24,20 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
         useEffect(() => {
             const data = async () => {
-                debugger;
                 await user(authState.authToken);
-                console.log(authState);
             };
             data();
-        }, [authState]);
+        }, []);
 
+        useEffect(() => {
+            const saveImageData = async () => {
+                const blob = _formatBlobs(authState, imageState);
+            };
+            if (authState?.userInfo && authState.isLoggedIn && imageState) {
+                saveImageData();
+            }
+        }, []);
+        console.log(authState);
         if (webPages !== undefined) {
             const { value: pages, totalEstimatedMatches } = webPages;
             const typePages: Array<SearchPreviewReference> = pages;
