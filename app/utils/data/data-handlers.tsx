@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_BASE_DOMAIN, SECURE_KEY } from '@env';
 import { UserInfoType } from '../../../types/types';
 import {
+    HTTPConfig,
     ImageTextTypes,
     S3ObjectTypes,
     TextSearchTypes
@@ -24,17 +25,32 @@ export type ReportDataBlob = {
         user_email: string;
         user_email_verified: boolean;
         user_name: string;
+        client_date: string;
     };
+};
+
+export type UploadDataResponseType = {
+    config: HTTPConfig;
+    data: { data: {}; parameters: ReportDataBlob };
+    headers: any;
+    request: EventTarget;
+    status: number;
+    statusText: undefined | string;
+};
+
+export const _getClientDate = (): string => {
+    const d = new Date();
+    return d.toISOString();
 };
 
 export const _formatBlobs = (
     user: any,
     reportData: any
-): ReportDataBlob | boolean => {
+): ReportDataBlob | null => {
     const { userInfo, isLoggedIn } = user;
     if (!isLoggedIn) {
         // do not continue if the user is not logged in
-        return false;
+        return null;
     }
     const { imageData, textSearch, uploadData } = reportData;
     const data: any = {};
@@ -46,6 +62,7 @@ export const _formatBlobs = (
     data.user_email = userInfo.email;
     data.user_email_verified = userInfo.email_verified;
     data.user_name = userInfo.name;
+    data.client_time = _getClientDate();
     const key: any = {};
     key.name = userInfo.email;
     key.name_fallback = userInfo.nickname;
@@ -59,7 +76,7 @@ export const _formatBlobs = (
 
 export const uploadReportData = async (
     blob: ReportDataBlob
-): Promise<boolean> => {
+): Promise<UploadDataResponseType> => {
     const config = {
         headers: {
             Authorization: `Bearer ${SECURE_KEY}`,

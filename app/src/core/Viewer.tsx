@@ -7,6 +7,7 @@ import {
 import theme from '../../components/theme/theme';
 import { useImage } from '../../utils/images/image-context';
 import { useAuth } from '../../utils/auth/auth-context';
+import { useData } from '../../utils/data/data-context';
 import { ReportDataBlob, _formatBlobs } from '../../utils/data/data-handlers';
 
 interface LoadingProps {
@@ -18,6 +19,7 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
     if (route?.params) {
         const { state: imageState } = useImage();
         const { state: authState, user } = useAuth();
+        const { sendData } = useData();
         const { search } = route.params;
         const { webPages } = search?.data;
 
@@ -30,12 +32,12 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
         useEffect(() => {
             const saveImageData = async () => {
-                const blob: ReportDataBlob | boolean = _formatBlobs(
+                const blob: ReportDataBlob | null = _formatBlobs(
                     authState,
                     imageState
                 );
                 if (blob) {
-                    console.log(blob);
+                    await sendData(blob);
                 }
             };
             if (authState?.userInfo && authState.isLoggedIn && imageState) {

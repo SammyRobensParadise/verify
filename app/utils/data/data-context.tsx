@@ -1,5 +1,9 @@
 import React from 'react';
-import { ReportDataBlob, uploadReportData } from './data-handlers';
+import {
+    ReportDataBlob,
+    UploadDataResponseType,
+    uploadReportData
+} from './data-handlers';
 
 const DataContext = React.createContext(null);
 
@@ -67,8 +71,8 @@ const sendData = (dispatch: React.Dispatch<ActionType>) => async (
     blob: ReportDataBlob
 ) => {
     dispatch({ type: DataActionId.SEND_REPORT_DATA, payload: blob });
-    const raw = await uploadReportData(blob);
-    if (!raw) {
+    const raw: UploadDataResponseType = await uploadReportData(blob);
+    if (raw.status !== 200) {
         dispatch({ type: DataActionId.SEND_REPORT_DATA_ERROR, payload: blob });
         return false;
     }
