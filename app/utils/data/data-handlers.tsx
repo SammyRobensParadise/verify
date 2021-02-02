@@ -1,9 +1,14 @@
+/* eslint-disable no-undef */
+import axios from 'axios';
+import { API_BASE_DOMAIN, SECURE_KEY } from '@env';
 import { UserInfoType } from '../../../types/types';
 import {
     ImageTextTypes,
     S3ObjectTypes,
     TextSearchTypes
 } from '../images/image-handlers';
+
+const API_URL = API_BASE_DOMAIN;
 
 export type ReportDataBlob = {
     key: {
@@ -50,4 +55,21 @@ export const _formatBlobs = (
         data: data
     };
     return blob;
+};
+
+export const uploadReportData = async (
+    blob: ReportDataBlob
+): Promise<boolean> => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${SECURE_KEY}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    const r: any = await axios.post(
+        `${API_URL}/user/upload-report-data`,
+        blob,
+        config
+    );
+    return r;
 };
