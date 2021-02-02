@@ -32,20 +32,8 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
             .then((data: UserInfoType | undefined) => {
                 setUserInfo(data);
             })
-            .catch((e: Error) => {
-                createOneButtonAlert({
-                    buttons: [
-                        {
-                            title: 'OK',
-                            event: (): void => {
-                                console.log('error');
-                            },
-                            style: 'cancel'
-                        }
-                    ],
-                    title: 'Unable to load user information',
-                    message: e.toString()
-                });
+            .catch((error: Error) => {
+                alert(error);
             });
     }, []);
 

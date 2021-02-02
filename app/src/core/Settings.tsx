@@ -22,7 +22,6 @@ const SettingsPage = () => {
     useEffect(() => {
         const data = async () => {
             await user(state.authToken);
-            console.log(state);
         };
         data();
     }, []);

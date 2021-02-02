@@ -7,7 +7,7 @@ import {
 import theme from '../../components/theme/theme';
 import { useImage } from '../../utils/images/image-context';
 import { useAuth } from '../../utils/auth/auth-context';
-import { _formatBlobs } from '../../utils/data/data-handlers';
+import { ReportDataBlob, _formatBlobs } from '../../utils/data/data-handlers';
 
 interface LoadingProps {
     route: any;
@@ -18,7 +18,6 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
     if (route?.params) {
         const { state: imageState } = useImage();
         const { state: authState, user } = useAuth();
-        console.log(imageState, authState);
         const { search } = route.params;
         const { webPages } = search?.data;
 
@@ -31,13 +30,18 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
         useEffect(() => {
             const saveImageData = async () => {
-                const blob = _formatBlobs(authState, imageState);
+                const blob: ReportDataBlob | boolean = _formatBlobs(
+                    authState,
+                    imageState
+                );
+                if (blob) {
+                    console.log(blob);
+                }
             };
             if (authState?.userInfo && authState.isLoggedIn && imageState) {
                 saveImageData();
             }
-        }, []);
-        console.log(authState);
+        }, [authState]);
         if (webPages !== undefined) {
             const { value: pages, totalEstimatedMatches } = webPages;
             const typePages: Array<SearchPreviewReference> = pages;
