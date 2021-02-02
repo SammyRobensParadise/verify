@@ -201,7 +201,9 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
                             color: theme.colors.primaryPurple,
                             flex: 0
                         }}
-                    >{`Hi ${userInfo?.name ? userInfo.name : ''}! 👋`}</Text>
+                    >{`Hi ${
+                        userInfo?.given_name ? userInfo.given_name : ''
+                    }! 👋`}</Text>
                     <Text
                         style={{
                             fontFamily: theme.typeface.fontFamily,
