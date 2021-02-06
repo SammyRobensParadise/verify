@@ -10,6 +10,7 @@ import SettingsPage from './Settings';
 import LoadingPage from './Loading';
 import ViewerPage from './Viewer';
 import theme from '../../components/theme/theme';
+import ProfilePage from './Profile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -41,6 +42,14 @@ const Core = () => {
                 options={{
                     tabBarLabel: 'View',
                     tabBarIcon: () => <AntDesign name="infocirlceo" size={20} />
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={ProfilePage}
+                options={{
+                    tabBarLabel: 'Profile',
+                    tabBarIcon: () => <AntDesign name="user" size={20} />
                 }}
             />
             <Tab.Screen

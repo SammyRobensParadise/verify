@@ -32,9 +32,11 @@ type AuthState = {
     authToken: string;
 };
 
+type accessToken = any;
+
 type ActionType = {
     type: number;
-    payload: Partial<AuthState>;
+    payload: Partial<AuthState> | accessToken;
 };
 
 const AuthDefaultState: AuthState = {
@@ -83,7 +85,8 @@ const AuthReducer = (state: AuthState, action: ActionType) => {
                 ...state,
                 isLoading: false,
                 isLoggedIn: true,
-                authToken: action.payload
+                userInfo: action.payload.userInfo,
+                authToken: action.payload.accessToken
             };
         }
         case AuthActionId.LOGIN_WITHINFO_ERROR: {
@@ -156,7 +159,7 @@ const loginInfo = (dispatch: React.Dispatch<ActionType>) => async () => {
     const raw = await _onLoginWithInfo();
     dispatch({
         type: AuthActionId.LOGIN_WITHINFO_SUCCESS,
-        payload: raw.accessToken
+        payload: raw
     });
 };
 
