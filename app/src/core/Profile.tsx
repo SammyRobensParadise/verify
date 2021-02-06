@@ -5,14 +5,13 @@ import {
     Text,
     ScrollView,
     StyleSheet,
-    ActivityIndicator
+    ActivityIndicator,
+    Image
 } from 'react-native';
 import theme from '../../components/theme/theme';
 import { useImage } from '../../utils/images/image-context';
 import { useAuth } from '../../utils/auth/auth-context';
 import { useData } from '../../utils/data/data-context';
-import { ReportDataBlob, _formatBlobs } from '../../utils/data/data-handlers';
-import AvatarIcon from '../../components/elements/Avatar';
 
 const ProfilePage = (): JSX.Element => {
     const { state } = useAuth();
@@ -27,9 +26,43 @@ const ProfilePage = (): JSX.Element => {
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
-                    <AvatarIcon />
-                    <View>
-                        <Text>This is some text</Text>
+                    <View
+                        style={{
+                            alignContent: 'center',
+                            alignItems: 'center',
+                            width: '100%'
+                        }}
+                    >
+                        <Image
+                            source={{ uri: userInfo.picture }}
+                            resizeMode={'contain'}
+                            style={styles.image}
+                        />
+                        <Text style={{ paddingTop: 20, fontSize: 18 }}>
+                            {userInfo.name}
+                        </Text>
+                        <Text style={{ paddingTop: 10, fontSize: 18 }}>
+                            {userInfo.email}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            paddingTop: 40,
+                            borderBottomColor: theme.colors.primaryPurple,
+                            paddingBottom: 10,
+                            borderBottomWidth: 0.5
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 18,
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                paddingStart: 20
+                            }}
+                        >
+                            Your Reports
+                        </Text>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -60,6 +93,21 @@ const styles = StyleSheet.create({
         height: '100%',
         marginTop: 0,
         padding: 30
+    },
+    image: {
+        paddingTop: 20,
+        marginTop: 20,
+        height: 100,
+        width: 100,
+        borderRadius: 50,
+        overflow: 'hidden',
+        shadowColor: theme.colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84
     }
 });
 

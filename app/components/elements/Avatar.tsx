@@ -8,7 +8,7 @@ const NO_IMAGE: string = 'no-image';
 const AvatarIcon = ({
     size
 }: {
-    size: 'small' | 'medium' | 'large' | 'xlarge';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
 }): JSX.Element => {
     const [Loading, isLoading] = useState(true);
     const [source, setSource] = useState('');
@@ -22,7 +22,7 @@ const AvatarIcon = ({
     }, []);
 
     const getAvatar = (
-        size: 'small' | 'medium' | 'large' | 'xlarge'
+        size: 'small' | 'medium' | 'large' | 'xlarge' | undefined
     ): JSX.Element => {
         return source === NO_IMAGE ? (
             <Avatar rounded size={size ? size : 'small'} activeOpacity={0.7} />
