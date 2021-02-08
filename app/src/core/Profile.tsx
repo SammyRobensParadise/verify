@@ -9,18 +9,32 @@ import {
     Image
 } from 'react-native';
 import theme from '../../components/theme/theme';
-import { useImage } from '../../utils/images/image-context';
 import { useAuth } from '../../utils/auth/auth-context';
 import { useData } from '../../utils/data/data-context';
 
 const ProfilePage = (): JSX.Element => {
     const { state } = useAuth();
+    const { getAllData, state: data } = useData();
     const [show, setShow] = useState<boolean>(false);
     useEffect(() => {
         if (state.isLoggedIn) {
             setShow(true);
         }
     }, []);
+
+    useEffect(() => {
+        const getData = async () => {
+            const r = await getAllData(state.userInfo.email);
+            if (r) {
+                console.log(data);
+            }
+            return true;
+        };
+        if (state) {
+            getData();
+        }
+    }, []);
+
     if (show) {
         const { userInfo } = state;
         return (

@@ -15,7 +15,6 @@ const AvatarIcon = ({
     const { state } = useAuth();
     useEffect(() => {
         if (state?.userInfo) {
-            console.log(state.userInfo);
             setSource(state.userInfo.picture);
             isLoading(false);
         }

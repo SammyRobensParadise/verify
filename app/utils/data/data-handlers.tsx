@@ -8,6 +8,7 @@ import {
     S3ObjectTypes,
     TextSearchTypes
 } from '../images/image-handlers';
+import { useAuth } from '../auth/auth-context';
 
 const API_URL = API_BASE_DOMAIN;
 
@@ -88,5 +89,22 @@ export const uploadReportData = async (
         blob,
         config
     );
+    return r;
+};
+
+export const getAllReportData = async (email: string): Promise<Array<any>> => {
+    console.log(email);
+    const config = {
+        headers: {
+            Authorization: `Bearer ${SECURE_KEY}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    const r: any = await axios.post(
+        `${API_URL}/user/get-all-report-data`,
+        { PrimarySortKey: email },
+        config
+    );
+    console.log(r);
     return r;
 };

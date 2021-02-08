@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    getAllReportData,
     ReportDataBlob,
     UploadDataResponseType,
     uploadReportData
@@ -10,26 +11,31 @@ const DataContext = React.createContext(null);
 const DataActionId = {
     SEND_REPORT_DATA: 1,
     SEND_REPORT_DATA_SUCCESS: 2,
-    SEND_REPORT_DATA_ERROR: 3
+    SEND_REPORT_DATA_ERROR: 3,
+    GET_ALL_REPORT_DATA: 4,
+    GET_ALL_REPORT_DATA_SUCCESS: 5,
+    GET_ALL_REPORT_DATA_ERROR: 6
 };
 
 type DataState = {
     reportBlob: ReportDataBlob | null;
     hasUploadedLastPost: boolean;
-    isUploading: boolean;
+    isLoading: boolean;
     error: boolean;
+    reportInfo: Array<any>;
 };
 
 type ActionType = {
     type: number;
-    payload: Partial<DataState | ReportDataBlob>;
+    payload: Partial<DataState | ReportDataBlob> | [];
 };
 
 const DataDefaultState: DataState = {
     reportBlob: null,
     hasUploadedLastPost: false,
-    isUploading: false,
-    error: false
+    isLoading: false,
+    error: false,
+    reportInfo: []
 };
 
 const DataReducer = (state: DataState, action: ActionType) => {
@@ -39,7 +45,7 @@ const DataReducer = (state: DataState, action: ActionType) => {
                 ...state,
                 reportBlob: action.payload,
                 hasUploadedLastPost: false,
-                isUploading: true,
+                isLoading: true,
                 error: false
             };
         }
@@ -48,7 +54,7 @@ const DataReducer = (state: DataState, action: ActionType) => {
                 ...state,
                 reportBlob: action.payload,
                 hasUploadedLastPost: true,
-                isUploading: false,
+                isLoading: false,
                 error: false
             };
         }
@@ -57,8 +63,32 @@ const DataReducer = (state: DataState, action: ActionType) => {
                 ...state,
                 reportBlob: action.payload,
                 hasUploadedLastPost: false,
-                isUploading: false,
+                isLoading: false,
                 error: true
+            };
+        }
+        case DataActionId.GET_ALL_REPORT_DATA: {
+            return {
+                ...state,
+                isLoading: true,
+                error: false,
+                reportInfo: []
+            };
+        }
+        case DataActionId.GET_ALL_REPORT_DATA_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                error: false,
+                reportInfo: action.payload
+            };
+        }
+        case DataActionId.SEND_REPORT_DATA_ERROR: {
+            return {
+                ...state,
+                isLoading: false,
+                error: true,
+                reportInfo: action.payload
             };
         }
         default: {
@@ -77,6 +107,22 @@ const sendData = (dispatch: React.Dispatch<ActionType>) => async (
         return false;
     }
     dispatch({ type: DataActionId.SEND_REPORT_DATA_SUCCESS, payload: blob });
+    return true;
+};
+
+const getAllData = (dispacth: React.Dispatch<ActionType>) => async (
+    email: string
+) => {
+    dispacth({
+        type: DataActionId.GET_ALL_REPORT_DATA,
+        payload: []
+    });
+    const raw: any = await getAllReportData(email);
+    if (raw.status !== 200) {
+        dispacth({ type: DataActionId.SEND_REPORT_DATA_ERROR, payload: raw });
+        return false;
+    }
+    dispacth({ type: DataActionId.SEND_REPORT_DATA_SUCCESS, payload: raw });
     return true;
 };
 
@@ -102,6 +148,7 @@ export const useData = () => {
     return {
         state,
         dispatch,
-        sendData: sendData(dispatch)
+        sendData: sendData(dispatch),
+        getAllData: getAllData(dispatch)
     };
 };
