@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     SafeAreaView,
     View,
@@ -8,76 +8,112 @@ import {
     ActivityIndicator,
     Image
 } from 'react-native';
+import { FlatGrid } from 'react-native-super-grid';
+
 import theme from '../../components/theme/theme';
 import { useAuth } from '../../utils/auth/auth-context';
 import { useData } from '../../utils/data/data-context';
 
+const ProfilePageGrid = ({ data }: { data: any }): JSX.Element => {
+    console.log(data);
+    const Items = data.reportInfo.Items;
+    return (
+        <View>
+            <FlatGrid
+                itemDimension={140}
+                data={Items}
+                spacing={10}
+                style={{
+                    paddingRight: 20,
+                    backgroundColor: theme.colors.white
+                }}
+                renderItem={({ item }) => (
+                    <View
+                        style={{
+                            borderWidth: 0.5,
+                            borderColor: theme.colors.primaryPurple,
+                            borderRadius: 3
+                        }}
+                    >
+                        <Image
+                            source={{ uri: item.info.upload_data.Location }}
+                            resizeMode={'contain'}
+                            style={{ height: 150, width: 'auto' }}
+                        />
+                    </View>
+                )}
+            />
+        </View>
+    );
+};
+
 const ProfilePage = (): JSX.Element => {
     const { state } = useAuth();
     const { getAllData, state: data } = useData();
-    const [show, setShow] = useState<boolean>(false);
-    useEffect(() => {
-        if (state.isLoggedIn) {
-            setShow(true);
-        }
-    }, []);
 
     useEffect(() => {
         const getData = async () => {
             const r = await getAllData(state.userInfo.email);
-            if (r) {
-                console.log(data);
-            }
-            return true;
+            return r;
         };
         if (state) {
             getData();
         }
     }, []);
 
-    if (show) {
+    if (state.isLoggedIn) {
         const { userInfo } = state;
         return (
             <SafeAreaView style={styles.container}>
-                <ScrollView>
-                    <View
+                <View
+                    style={{
+                        alignContent: 'center',
+                        alignItems: 'center',
+                        width: '100%'
+                    }}
+                >
+                    <Image
+                        source={{ uri: userInfo.picture }}
+                        resizeMode={'contain'}
+                        style={styles.image}
+                    />
+                    <Text style={{ paddingTop: 20, fontSize: 18 }}>
+                        {userInfo.name}
+                    </Text>
+                    <Text style={{ paddingTop: 10, fontSize: 18 }}>
+                        {userInfo.email}
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        paddingTop: 40,
+                        borderBottomColor: theme.colors.primaryPurple,
+                        paddingBottom: 10,
+                        borderBottomWidth: 0.5
+                    }}
+                >
+                    <Text
                         style={{
-                            alignContent: 'center',
-                            alignItems: 'center',
-                            width: '100%'
-                        }}
-                    >
-                        <Image
-                            source={{ uri: userInfo.picture }}
-                            resizeMode={'contain'}
-                            style={styles.image}
-                        />
-                        <Text style={{ paddingTop: 20, fontSize: 18 }}>
-                            {userInfo.name}
-                        </Text>
-                        <Text style={{ paddingTop: 10, fontSize: 18 }}>
-                            {userInfo.email}
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            paddingTop: 40,
-                            borderBottomColor: theme.colors.primaryPurple,
+                            fontSize: 18,
+                            paddingTop: 10,
                             paddingBottom: 10,
-                            borderBottomWidth: 0.5
+                            paddingStart: 20
                         }}
                     >
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                paddingTop: 10,
-                                paddingBottom: 10,
-                                paddingStart: 20
-                            }}
-                        >
-                            Your Reports
-                        </Text>
-                    </View>
+                        Your Reports
+                    </Text>
+                </View>
+                <ScrollView style={styles.gridView}>
+                    {data?.reportInfo && !data.isLoading ? (
+                        <ProfilePageGrid data={data} />
+                    ) : (
+                        <View style={{ paddingTop: 40 }}>
+                            <ActivityIndicator
+                                size="large"
+                                color={theme.colors.primaryPurple}
+                            />
+                        </View>
+                    )}
                 </ScrollView>
             </SafeAreaView>
         );
@@ -122,6 +158,10 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84
+    },
+    gridView: {
+        marginTop: 10,
+        flex: 1
     }
 });
 

@@ -9005,7 +9005,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -9318,6 +9318,18 @@ fsevents@^1.2.7:
   peerDependencies:
     react-native: "*"
   checksum: 9f4e49cffa385f97ad421556b2a0444865c06b127a11ddc1fb590dc2ebcd53b70a561ba93969b0878b6f46afda2d6ff46707ee539b67e75a6837860186911cb8
+  languageName: node
+  linkType: hard
+
+"react-native-super-grid@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "react-native-super-grid@npm:4.1.1"
+  dependencies:
+    prop-types: ^15.6.0
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.59.0"
+  checksum: 22988a93c2de2e63c2f2b27c45a1fd731636e08bd216dfa24b4705f5e900c9941ec27fe6ab4844fdd132c62f5c2232cf19eeb4b7b99fe4538c6ef46f43a4b30c
   languageName: node
   linkType: hard
 
@@ -11465,6 +11477,7 @@ typescript@^4.1.3:
     react-native-image-picker: ^3.1.1
     react-native-safe-area-context: ^3.1.9
     react-native-screens: ^2.16.1
+    react-native-super-grid: ^4.1.1
     react-native-svg: ^12.1.0
     react-native-vector-icons: ^8.0.0
     react-test-renderer: 16.11.0

@@ -22,12 +22,12 @@ type DataState = {
     hasUploadedLastPost: boolean;
     isLoading: boolean;
     error: boolean;
-    reportInfo: Array<any>;
+    reportInfo: Object | null;
 };
 
 type ActionType = {
     type: number;
-    payload: Partial<DataState | ReportDataBlob> | [];
+    payload: Partial<DataState | ReportDataBlob> | null;
 };
 
 const DataDefaultState: DataState = {
@@ -35,7 +35,7 @@ const DataDefaultState: DataState = {
     hasUploadedLastPost: false,
     isLoading: false,
     error: false,
-    reportInfo: []
+    reportInfo: null
 };
 
 const DataReducer = (state: DataState, action: ActionType) => {
@@ -115,14 +115,20 @@ const getAllData = (dispacth: React.Dispatch<ActionType>) => async (
 ) => {
     dispacth({
         type: DataActionId.GET_ALL_REPORT_DATA,
-        payload: []
+        payload: null
     });
     const raw: any = await getAllReportData(email);
     if (raw.status !== 200) {
-        dispacth({ type: DataActionId.SEND_REPORT_DATA_ERROR, payload: raw });
+        dispacth({
+            type: DataActionId.GET_ALL_REPORT_DATA_ERROR,
+            payload: raw
+        });
         return false;
     }
-    dispacth({ type: DataActionId.SEND_REPORT_DATA_SUCCESS, payload: raw });
+    dispacth({
+        type: DataActionId.GET_ALL_REPORT_DATA_SUCCESS,
+        payload: raw.data.data
+    });
     return true;
 };
 

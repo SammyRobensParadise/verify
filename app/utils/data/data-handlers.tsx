@@ -93,7 +93,6 @@ export const uploadReportData = async (
 };
 
 export const getAllReportData = async (email: string): Promise<Array<any>> => {
-    console.log(email);
     const config = {
         headers: {
             Authorization: `Bearer ${SECURE_KEY}`,
@@ -105,6 +104,5 @@ export const getAllReportData = async (email: string): Promise<Array<any>> => {
         { PrimarySortKey: email },
         config
     );
-    console.log(r);
     return r;
 };
