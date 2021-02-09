@@ -15,7 +15,6 @@ import { useAuth } from '../../utils/auth/auth-context';
 import { useData } from '../../utils/data/data-context';
 
 const ProfilePageGrid = ({ data }: { data: any }): JSX.Element => {
-    console.log(data);
     const Items = data.reportInfo.Items;
     return (
         <View>
