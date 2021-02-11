@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, View, Text, ScrollView, StyleSheet } from 'react-native';
+import {
+    SafeAreaView,
+    View,
+    Text,
+    ScrollView,
+    StyleSheet,
+    Image
+} from 'react-native';
 import {
     WebpagePreview,
     SearchPreviewReference
@@ -20,7 +27,7 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
         const { state: imageState } = useImage();
         const { state: authState, user } = useAuth();
         const { sendData } = useData();
-        const { search } = route.params;
+        const { search, image } = route.params;
         const { webPages } = search?.data;
 
         useEffect(() => {
@@ -50,6 +57,11 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
             return (
                 <SafeAreaView style={styles.container}>
                     <ScrollView>
+                        <Image
+                            source={{ uri: image }}
+                            resizeMode={'contain'}
+                            style={styles.imgWrapper}
+                        />
                         <View style={{ alignItems: 'center', marginTop: 40 }}>
                             <Text>{`Showing top ${typePages?.length} of ${totalEstimatedMatches} Results`}</Text>
                         </View>
@@ -92,6 +104,20 @@ const styles = StyleSheet.create({
         height: '100%',
         marginTop: 0,
         padding: 30
+    },
+    imgWrapper: {
+        marginHorizontal: 30,
+        marginVertical: 10,
+        borderRadius: 20,
+        shadowColor: theme.colors.black,
+        height: 250,
+        width: 'auto',
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84
     }
 });
 
