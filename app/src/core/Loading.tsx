@@ -3,7 +3,6 @@ import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
 import { useImage } from '../../utils/images/image-context';
 import theme from '../../components/theme/theme';
 
-const HTTP_OK: number = 200;
 type PhaseType = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface LoadingProps {
