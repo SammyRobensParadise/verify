@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     View,
@@ -27,8 +27,12 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
         const { state: imageState } = useImage();
         const { state: authState, user } = useAuth();
         const { sendData } = useData();
-        const { search, image } = route.params;
-        let webPages;
+        const { search, image, isNewReport } = route.params;
+        const [shouldSaveImageToDB, setShouldSaveImageToDB] = useState<boolean>(
+            false
+        );
+        let webPages: any;
+
         if (search?.data) {
             webPages = search?.data.webPages;
         } else {
@@ -43,7 +47,14 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
         }, []);
 
         useEffect(() => {
+            if (isNewReport) {
+                setShouldSaveImageToDB(true);
+            }
+        }, []);
+
+        useEffect(() => {
             const saveImageData = async () => {
+                console.debug('called');
                 const blob: ReportDataBlob | null = _formatBlobs(
                     authState,
                     imageState
@@ -52,10 +63,16 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
                     await sendData(blob);
                 }
             };
-            if (authState?.userInfo && authState.isLoggedIn && imageState) {
+            if (
+                authState?.userInfo &&
+                authState.isLoggedIn &&
+                imageState &&
+                shouldSaveImageToDB
+            ) {
                 saveImageData();
             }
-        }, [authState]);
+        }, [shouldSaveImageToDB]);
+
         if (webPages !== undefined) {
             const { value: pages, totalEstimatedMatches } = webPages;
             const typePages: Array<SearchPreviewReference> = pages;

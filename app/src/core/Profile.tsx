@@ -48,14 +48,15 @@ const ProfilePageGrid = ({
                                     screen: 'Viewer',
                                     params: {
                                         search: item.info.text_search_data,
-                                        image: item.info.upload_data.Location
+                                        image: item.info.upload_data.Location,
+                                        isNewReport: false
                                     }
                                 });
                             }}
                         >
                             <Image
                                 source={{ uri: item.info.upload_data.Location }}
-                                resizeMode={'contain'}
+                                resizeMode={'center'}
                                 style={{ height: 150, width: 'auto' }}
                             />
                         </TouchableOpacity>

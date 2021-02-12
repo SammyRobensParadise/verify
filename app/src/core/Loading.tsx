@@ -31,7 +31,11 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
                         const { Location: imageUri } = d;
                         navigation.navigate('Core', {
                             screen: 'Viewer',
-                            params: { search: r, image: imageUri }
+                            params: {
+                                search: r,
+                                image: imageUri,
+                                isNewReport: true
+                            }
                         });
                         return true;
                     }
