@@ -28,7 +28,12 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
         const { state: authState, user } = useAuth();
         const { sendData } = useData();
         const { search, image } = route.params;
-        const { webPages } = search?.data;
+        let webPages;
+        if (search?.data) {
+            webPages = search?.data.webPages;
+        } else {
+            webPages = search?.webPages;
+        }
 
         useEffect(() => {
             const data = async () => {

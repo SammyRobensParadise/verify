@@ -8,13 +8,21 @@ import {
     ActivityIndicator,
     Image
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FlatGrid } from 'react-native-super-grid';
 
 import theme from '../../components/theme/theme';
 import { useAuth } from '../../utils/auth/auth-context';
 import { useData } from '../../utils/data/data-context';
 
-const ProfilePageGrid = ({ data }: { data: any }): JSX.Element => {
+const ProfilePageGrid = ({
+    data,
+    navigation
+}: {
+    data: any;
+    navigation: any;
+}): JSX.Element => {
+    console.log(data);
     const Items = data.reportInfo.Items;
     return (
         <View>
@@ -34,11 +42,23 @@ const ProfilePageGrid = ({ data }: { data: any }): JSX.Element => {
                             borderRadius: 3
                         }}
                     >
-                        <Image
-                            source={{ uri: item.info.upload_data.Location }}
-                            resizeMode={'contain'}
-                            style={{ height: 150, width: 'auto' }}
-                        />
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate('Core', {
+                                    screen: 'Viewer',
+                                    params: {
+                                        search: item.info.text_search_data,
+                                        image: item.info.upload_data.Location
+                                    }
+                                });
+                            }}
+                        >
+                            <Image
+                                source={{ uri: item.info.upload_data.Location }}
+                                resizeMode={'contain'}
+                                style={{ height: 150, width: 'auto' }}
+                            />
+                        </TouchableOpacity>
                     </View>
                 )}
             />
@@ -46,7 +66,7 @@ const ProfilePageGrid = ({ data }: { data: any }): JSX.Element => {
     );
 };
 
-const ProfilePage = (): JSX.Element => {
+const ProfilePage = ({ navigation }: { navigation: any }): JSX.Element => {
     const { state } = useAuth();
     const { getAllData, state: data } = useData();
 
@@ -104,7 +124,7 @@ const ProfilePage = (): JSX.Element => {
                 </View>
                 <ScrollView style={styles.gridView}>
                     {data?.reportInfo && !data.isLoading ? (
-                        <ProfilePageGrid data={data} />
+                        <ProfilePageGrid data={data} navigation={navigation} />
                     ) : (
                         <View style={{ paddingTop: 40 }}>
                             <ActivityIndicator

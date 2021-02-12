@@ -14,7 +14,6 @@ import {
     MediaType
 } from 'react-native-image-picker';
 import { getDataObject } from '../../utils/store/store-handlers';
-import { createOneButtonAlert } from '../../components/alerts/Alerts';
 import theme from '../../components/theme/theme';
 import ImagePreview from '../../components/elements/ImagePreview';
 import { KEYS } from '../../utils/store/keys';
