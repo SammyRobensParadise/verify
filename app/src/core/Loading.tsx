@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, View, ActivityIndicator } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import { useImage } from '../../utils/images/image-context';
 import theme from '../../components/theme/theme';
 
@@ -67,8 +68,9 @@ const LoadingPage = ({ route, navigation }: LoadingProps): JSX.Element => {
                     >
                         Loading...
                     </Text>
-                    <ActivityIndicator
-                        size="large"
+                    <Spinner
+                        type="ChasingDots"
+                        size={50}
                         color={theme.colors.primaryPurple}
                     />
                     <CurrentAnalysisState phase={status} />

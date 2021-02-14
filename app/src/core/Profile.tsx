@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
     Image
 } from 'react-native';
+import Spinner from 'react-native-spinkit';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FlatGrid } from 'react-native-super-grid';
 
@@ -134,11 +135,20 @@ const ProfilePage = ({ navigation }: { navigation: any }): JSX.Element => {
                     {data?.reportInfo && !data.isLoading ? (
                         <ProfilePageGrid data={data} navigation={navigation} />
                     ) : (
-                        <View style={{ paddingTop: 40 }}>
-                            <ActivityIndicator
-                                size="large"
-                                color={theme.colors.primaryPurple}
-                            />
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: '100%'
+                            }}
+                        >
+                            <View style={{ paddingTop: 100 }}>
+                                <Spinner
+                                    type="ChasingDots"
+                                    size={50}
+                                    color={theme.colors.primaryPurple}
+                                />
+                            </View>
                         </View>
                     )}
                 </ScrollView>

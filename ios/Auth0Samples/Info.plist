@@ -7,6 +7,8 @@
 		<string>AntDesign.ttf</string>
 		<string>Ionicons.ttf</string>
 		<string>MaterialCommunityIcons.ttf</string>
+		<string>antfill.ttf</string>
+		<string>antoutline.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -59,7 +61,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>App needs Camera Access Permission</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>App needs photo library Access</string>
 	<key>UILaunchStoryboardName</key>
