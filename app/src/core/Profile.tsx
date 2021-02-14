@@ -22,7 +22,6 @@ const ProfilePageGrid = ({
     data: any;
     navigation: any;
 }): JSX.Element => {
-    console.log(data);
     const Items = data.reportInfo.Items;
     return (
         <View>
