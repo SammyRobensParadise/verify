@@ -26,7 +26,7 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
     if (route?.params) {
         const { state: imageState } = useImage();
         const { state: authState, user } = useAuth();
-        const { sendData } = useData();
+        const { sendData, getAllData } = useData();
         const { search, image, isNewReport } = route.params;
         const [shouldSaveImageToDB, setShouldSaveImageToDB] = useState<boolean>(
             false
@@ -54,13 +54,13 @@ const ViewerPage = ({ route }: LoadingProps): JSX.Element => {
 
         useEffect(() => {
             const saveImageData = async () => {
-                console.debug('called');
                 const blob: ReportDataBlob | null = _formatBlobs(
                     authState,
                     imageState
                 );
                 if (blob) {
                     await sendData(blob);
+                    await getAllData(authState.userInfo.email);
                 }
             };
             if (
