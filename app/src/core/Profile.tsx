@@ -1,3 +1,4 @@
+import Item from '@ant-design/react-native/lib/list/ListItem';
 import React, { useEffect } from 'react';
 import {
     SafeAreaView,
@@ -23,11 +24,18 @@ const ProfilePageGrid = ({
     navigation: any;
 }): JSX.Element => {
     const Items = data.reportInfo.Items;
+    const itemsByDate = Items.sort((a: any, b: any) => {
+        return a.info.client_time < b.info.client_time
+            ? -1
+            : a.info.client_time > b.info.client_time
+            ? 1
+            : 0;
+    }).reverse();
     return (
         <View>
             <FlatGrid
                 itemDimension={140}
-                data={Items}
+                data={itemsByDate}
                 spacing={10}
                 style={{
                     paddingRight: 20,
