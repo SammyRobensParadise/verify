@@ -7,17 +7,22 @@ import {
     TouchableOpacity,
     Text
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import theme from '../../components/theme/theme';
 import { _onLoginWithInfo } from '../../utils/auth/auth-handlers';
 import { LogoV } from '../../components/svg/Vectors';
 import { useAuth } from '../../utils/auth/auth-context';
 
 const Landing = (): JSX.Element => {
-    const { loginInfo, state } = useAuth();
+    const { loginInfo, user } = useAuth();
 
     useEffect(() => {
         const lgn = async () => {
-            console.log(state);
+            const token = await AsyncStorage.getItem('auth-token');
+            console.log(token);
+            if (token) {
+                await user(token);
+            }
         };
         lgn();
     }, []);
