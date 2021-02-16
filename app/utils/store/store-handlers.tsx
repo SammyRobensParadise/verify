@@ -10,7 +10,7 @@ export const storeData = async (key: string, value: string): Promise<void> => {
     try {
         await AsyncStorage.setItem(key, value);
     } catch (e) {
-        alert(`Unable to get Data ${e}`);
+        alert(`Unable to set Data ${e}`);
     }
 };
 

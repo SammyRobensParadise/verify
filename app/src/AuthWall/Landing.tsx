@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
     StyleSheet,
@@ -13,7 +13,15 @@ import { LogoV } from '../../components/svg/Vectors';
 import { useAuth } from '../../utils/auth/auth-context';
 
 const Landing = (): JSX.Element => {
-    const { loginInfo } = useAuth();
+    const { loginInfo, state } = useAuth();
+
+    useEffect(() => {
+        const lgn = async () => {
+            console.log(state);
+        };
+        lgn();
+    }, []);
+
     const _handleLogin = async () => {
         await loginInfo();
     };

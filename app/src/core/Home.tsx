@@ -13,15 +13,17 @@ import {
     launchImageLibrary,
     MediaType
 } from 'react-native-image-picker';
-import { getDataObject } from '../../utils/store/store-handlers';
+import { getDataObject, storeData } from '../../utils/store/store-handlers';
 import theme from '../../components/theme/theme';
 import ImagePreview from '../../components/elements/ImagePreview';
 import { KEYS } from '../../utils/store/keys';
 import AvatarIcon from '../../components/elements/Avatar';
 import { Slime } from '../../components/svg/Vectors';
 import { UserInfoType } from 'types/types';
+import { useAuth } from '../../utils/auth/auth-context';
 
 const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
+    const { state } = useAuth();
     const [userInfo, setUserInfo] = useState<UserInfoType>();
     const [file, setFile] = useState({});
     const [showImagePreview, setShowImagePreview] = useState<boolean>(false);
@@ -36,6 +38,15 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
             });
     }, []);
 
+    useEffect(() => {
+        const sd = async () => {
+            debugger;
+            await storeData('auth-token', state.authToken);
+        };
+        if (state?.userInfo) {
+            sd();
+        }
+    }, []);
     const requestCameraPermission = async () => {
         if (Platform.OS === 'android') {
             try {
