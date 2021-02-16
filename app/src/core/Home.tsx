@@ -40,7 +40,6 @@ const HomePage = ({ navigation }: { navigation: any }): JSX.Element => {
 
     useEffect(() => {
         const sd = async () => {
-            debugger;
             await storeData('auth-token', state.authToken);
         };
         if (state?.userInfo) {
